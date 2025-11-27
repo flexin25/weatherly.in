@@ -60,7 +60,12 @@ function getWeatherIcon(id) {
     if (id === 800) return 'clear.svg';
     
     // Clouds: 801-804
-    if (id >= 801 && id <= 804) return 'clouds.svg';
+    // 801: few clouds (11-25%)
+    // 802: scattered clouds (25-50%)
+    // 803: broken clouds (51-84%)
+    // 804: overcast clouds (85-100%)
+    if (id === 801 || id === 802) return 'clouds.svg';
+    if (id === 803 || id === 804) return 'mostly-cloudy.svg';
     
     // Default fallback
     return 'clouds.svg';
