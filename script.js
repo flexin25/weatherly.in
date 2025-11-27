@@ -39,8 +39,6 @@ async function getFetchData(endPoint, city) {
 }
 
 function getWeatherIcon(id) {
-    console.log('Weather ID:', id); // Debug log
-    
     // Thunderstorm: 200-232
     if (id >= 200 && id <= 232) return 'thunderstorm.svg';
     
@@ -48,12 +46,16 @@ function getWeatherIcon(id) {
     if (id >= 300 && id <= 321) return 'drizzle.svg';
     
     // Rain: 500-531
+    // 500: light rain, 501: moderate rain, 502-504: heavy rain, 511: freezing rain, 520-531: showers
     if (id >= 500 && id <= 531) return 'rain.svg';
     
     // Snow: 600-622
-    if (id >= 600 && id <= 622) return 'snow.svg';
+    // 600: light snow, 601: snow, 602: heavy snow, 611-616: sleet/rain+snow, 620-622: showers
+    if (id === 600) return 'snow.svg'; // Light snow
+    if (id >= 601 && id <= 622) return 'snow.svg'; // All other snow
     
     // Atmosphere (Mist, Smoke, Haze, Dust, Fog, Sand, Ash, Squall, Tornado): 700-781
+    // 701: mist, 711: smoke, 721: haze, 731: dust/sand, 741: fog, 751: sand, 761: dust, 762: ash, 771: squall, 781: tornado
     if (id >= 700 && id <= 781) return 'atmosphere.svg';
     
     // Clear: 800
