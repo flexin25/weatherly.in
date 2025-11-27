@@ -39,13 +39,29 @@ async function getFetchData(endPoint, city) {
 }
 
 function getWeatherIcon(id) {
-    if (id <= 232) return 'thunderstorm.svg';
-    if (id <= 321) return 'drizzle.svg';
-    if (id <= 531) return 'rain.svg';
-    if (id <= 622) return 'snow.svg';
-    if (id <= 781) return 'atmosphere.svg';
-    if (id <= 800) return 'clear.svg';
-    else return 'clouds.svg';
+    // Thunderstorm: 200-232
+    if (id >= 200 && id < 300) return 'thunderstorm.svg';
+    
+    // Drizzle: 300-321
+    if (id >= 300 && id < 400) return 'drizzle.svg';
+    
+    // Rain: 500-531
+    if (id >= 500 && id < 600) return 'rain.svg';
+    
+    // Snow: 600-622
+    if (id >= 600 && id < 700) return 'snow.svg';
+    
+    // Atmosphere (Mist, Smoke, Haze, Dust, Fog, Sand, Ash, Squall, Tornado): 700-781
+    if (id >= 700 && id < 800) return 'atmosphere.svg';
+    
+    // Clear: 800
+    if (id === 800) return 'clear.svg';
+    
+    // Clouds: 801-804
+    if (id > 800 && id < 900) return 'clouds.svg';
+    
+    // Default fallback
+    return 'clouds.svg';
 }
 
 function getCurrentDate() {
