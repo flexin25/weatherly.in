@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Info - Weatherly</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="home-style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">Weatherly &lt;/&gt;</a>
+        <div class="nav-links">
+            <a href="about.html" class="nav-link">About</a>
+            <a href="info.html" class="nav-link active">Info</a>
+        </div>
+    </nav>
+
+    <!-- Info Content -->
+    <main class="info-container">
+        <div class="info-content">
+            <!-- Profile Card -->
+            <div class="profile-card">
+                <div class="profile-image-container">
+                    <img src="IMG_20250913_202854.jpg" alt="Abhishek Bardhan" class="profile-image">
+                </div>
+                <h2 class="profile-name">Abhishek Bardhan</h2>
+                <p class="profile-tagline">Tech enthusiast • Rookie developer • 19 • TIU Kolkata '28</p>
+                <p class="profile-bio">I build sleek, blacked‑out interfaces with thoughtful motion using HTML, CSS, JS and React/Vue.</p>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="contact-section">
+                <h2 class="contact-title">Get in touch</h2>
+                <p class="contact-subtitle">Send me a message and I'll get back to you as soon as possible.</p>
+
+                <form class="contact-form" id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" name="name" placeholder="Your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message *</label>
+                        <textarea id="message" name="message" placeholder="Tell me about your idea..." rows="6" required></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full py-8 text-center text-white/80 backdrop-blur-lg">
+        <h3 class="text-lg font-medium mb-4">Built with</h3>
+
+        <div class="flex justify-center items-center gap-10 mb-6">
+            <!-- HTML5 -->
+            <div class="flex flex-col items-center">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+                     alt="HTML5" class="w-10 h-10" />
+                <span class="mt-2 text-sm">HTML</span>
+            </div>
+
+            <!-- CSS3 -->
+            <div class="flex flex-col items-center">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+                     alt="CSS3" class="w-10 h-10" />
+                <span class="mt-2 text-sm">CSS</span>
+            </div>
+
+            <!-- JavaScript -->
+            <div class="flex flex-col items-center">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                     alt="JavaScript" class="w-10 h-10" />
+                <span class="mt-2 text-sm">JavaScript</span>
+            </div>
+        </div>
+
+        <p class="text-white/60 text-sm">© 2025 Abhishek Bardhan. All rights reserved.</p>
+    </footer>
+
+    <script src="contact-form.js"></script>
+</body>
+
+</html>
