@@ -162,6 +162,54 @@ body::before {
     }
 }
 
+.suggestions-dropdown {
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    display: none;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.suggestion-item {
+    padding: 10px 16px;
+    color: #1e3c72;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    transition: background 0.2s ease;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+}
+
+.suggestion-item:hover {
+    background: rgba(123, 97, 255, 0.15);
+}
+
+.suggestions-dropdown::-webkit-scrollbar {
+    width: 6px;
+}
+
+.suggestions-dropdown::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+.suggestions-dropdown::-webkit-scrollbar-thumb {
+    background: rgba(123, 97, 255, 0.3);
+    border-radius: 10px;
+}
+
 .city-input {
     width: 100%;
     padding: 10px 16px;
@@ -298,12 +346,6 @@ body::before {
     margin: 8px 0;
 }
 
-.sun-times-container {
-    display: flex;
-    gap: 8px;
-    margin: 8px 0;
-}
-
 .condition-item{
     flex: 1;
     display: flex;
@@ -340,7 +382,6 @@ body::before {
     padding: 4px 0;
     margin-top: 8px;
     margin-bottom: 12px;
-    max-width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
 }

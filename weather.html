@@ -16,8 +16,8 @@
     <main class="main-container">
 
         <header class="input-container">
-            <input class="city-input" placeholder="Search city, district, or village" type="text" list="location-suggestions">
-            <datalist id="location-suggestions"></datalist>
+            <input class="city-input" placeholder="Search city, district, or village" type="text" autocomplete="off">
+            <div class="suggestions-dropdown"></div>
             <button class="search-btn">
                 <span class="material-symbols-outlined">search</span>
             </button>
@@ -71,27 +71,6 @@
                     <div class="condition-info">
                         <h5 class="regular-txt">Wind Speed</h5>
                         <h5 class="wind-value-txt">2 M/s</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="sun-times-container">
-                <div class="condition-item">
-                    <span class="material-symbols-outlined">
-                        wb_twilight
-                    </span>
-                    <div class="condition-info">
-                        <h5 class="regular-txt">Sunrise</h5>
-                        <h5 class="sunrise-value-txt">06:00 AM</h5>
-                    </div>
-                </div>
-
-                <div class="condition-item">
-                    <span class="material-symbols-outlined">
-                        wb_sunny
-                    </span>
-                    <div class="condition-info">
-                        <h5 class="regular-txt">Sunset</h5>
-                        <h5 class="sunset-value-txt">06:00 PM</h5>
                     </div>
                 </div>
             </div>
