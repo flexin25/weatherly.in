@@ -380,14 +380,16 @@ body::before {
     display: flex;
     flex-wrap: nowrap;
     gap: 8px;
-    padding: 4px 0;
+    padding: 16px 12px;
     margin-top: 8px;
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     overflow-x: auto;
     overflow-y: hidden;
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
 }
 .forecast-items-container::-webkit-scrollbar{
     height: 6px;
@@ -402,7 +404,7 @@ body::before {
 }
 .forecast-item{
     background: rgba(255, 255, 255, 0.15);
-    padding: 10px 8px;
+    padding: 12px 8px;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
@@ -418,17 +420,17 @@ body::before {
 }
 
 .forecast-item-date{
-    font-size: 12px;
-    font-weight: 400;
+    font-size: 11px;
+    font-weight: 600;
     white-space: nowrap;
 }
 .forecast-item-img{
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     object-fit: contain;
 }
 .forest-item-temp{
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
 }
 
