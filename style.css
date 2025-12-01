@@ -384,6 +384,8 @@ body::before {
     margin-bottom: 12px;
     overflow-x: auto;
     overflow-y: hidden;
+    width: 100%;
+    max-width: 100%;
 }
 .forecast-items-container::-webkit-scrollbar{
     height: 6px;
