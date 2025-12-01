@@ -55,13 +55,11 @@ body::before {
     left: 0;
     top: 0;
 }
-/* UTILITIES */
+
 .regular-txt{
     font-weight: 400;
 }
-/* END OF UTILITIES */
 
-/* NAVBAR */
 .navbar {
     position: fixed;
     top: 0;
@@ -122,7 +120,6 @@ body::before {
     height: 2px;
     background: white;
 }
-/* END NAVBAR */
 
 .main-container {
     width: 300px;
@@ -138,15 +135,31 @@ body::before {
     transform: translateZ(0);
 }
 
-/* INPUT CONTAINER */
 .input-container {
-    /* width: 100%;
-    margin-top: 20px; */
     margin-bottom: 30px;
-    /* display: flex;
-    align-items: center;
-    gap: 10px; */
     position: relative;
+}
+
+.input-error-message {
+    position: absolute;
+    bottom: -22px;
+    left: 16px;
+    font-size: 12px;
+    color: #ff6b6b;
+    font-weight: 400;
+    display: none;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .city-input {
@@ -163,10 +176,45 @@ body::before {
     padding-right: 45px;
 }
 
-/* INPUT END CONTAINER */
 .city-input:focus {
     border: solid 3px rgba(255, 255, 255, 0.75);
     background: rgba(0, 0, 0, 0.25);
+}
+
+.unit-toggle-container {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 99px;
+    padding: 4px;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.unit-toggle-btn {
+    flex: 1;
+    padding: 8px 20px;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 99px;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.unit-toggle-btn:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.unit-toggle-btn.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .city-input::placeholder {
@@ -187,7 +235,6 @@ body::before {
     justify-content: center;
 }
 
-/* SECTION: WEATHER INFO */
 .weather-info {
     display: flex;
     flex-direction: column;
@@ -250,6 +297,13 @@ body::before {
     gap: 8px;
     margin: 8px 0;
 }
+
+.sun-times-container {
+    display: flex;
+    gap: 8px;
+    margin: 8px 0;
+}
+
 .condition-item{
     flex: 1;
     display: flex;
@@ -332,14 +386,11 @@ body::before {
     font-size: 14px;
     font-weight: 600;
 }
-/* END - SECTION: WEATHER INFO */
 
-/* SECTION: Message */
 .section-message{
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* justify-content: center; */
     text-align: center;
     gap: 15px;
 }
@@ -349,4 +400,3 @@ body::before {
     object-fit: contain;
     margin-bottom: 12px;
 }
-/* End - SECTION: Message */

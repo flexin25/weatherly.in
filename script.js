@@ -11,22 +11,182 @@ const descriptionTxt = document.querySelector('.condition-txt');
 const humidityTxt = document.querySelector('.humidity-value-txt');
 const pressureTxt = document.querySelector('.pressure-value-txt');
 const windValueTxt = document.querySelector('.wind-value-txt');
+const sunriseTxt = document.querySelector('.sunrise-value-txt');
+const sunsetTxt = document.querySelector('.sunset-value-txt');
 const weatherSummaryImg = document.querySelector('.weather-summary-img');
 const currentDateTxt = document.querySelector('.current-date-txt');
 
 const forecastItemsContainer = document.querySelector('.forecast-items-container');
+const unitToggleBtns = document.querySelectorAll('.unit-toggle-btn');
+const locationSuggestions = document.querySelector('#location-suggestions');
 
 const apiKey = '04c90abb0c88d8da11534c112a244bc9';
 
+const locationDatabase = [
+    'Mumbai', 'Delhi', 'Bangalore', 'Hyderabad', 'Chennai', 'Kolkata', 'Pune', 'Ahmedabad',
+    'Jaipur', 'Lucknow', 'Kanpur', 'Nagpur', 'Indore', 'Bhopal', 'Visakhapatnam', 'Patna',
+    'Vadodara', 'Ghaziabad', 'Ludhiana', 'Agra', 'Nashik', 'Faridabad', 'Meerut', 'Rajkot',
+    'Varanasi', 'Srinagar', 'Aurangabad', 'Dhanbad', 'Amritsar', 'Allahabad', 'Ranchi',
+    'Howrah', 'Coimbatore', 'Vijayawada', 'Jodhpur', 'Madurai', 'Raipur', 'Kota', 'Guwahati',
+    'Chandigarh', 'Thiruvananthapuram', 'Mysore', 'Bareilly', 'Aligarh', 'Moradabad',
+    'Thane', 'Navi Mumbai', 'Kalyan', 'Vasai', 'Bhiwandi', 'Panvel', 'Ulhasnagar',
+    'Noida', 'Greater Noida', 'Ghaziabad', 'Faridabad', 'Gurugram', 'Rohtak', 'Sonipat',
+    'Raigad', 'Ratnagiri', 'Sindhudurg', 'Satara', 'Sangli', 'Kolhapur', 'Solapur',
+    'Ahmednagar', 'Latur', 'Osmanabad', 'Beed', 'Jalna', 'Parbhani', 'Hingoli', 'Nanded',
+    'Ernakulam', 'Kottayam', 'Kollam', 'Thrissur', 'Palakkad', 'Malappuram', 'Kozhikode',
+    'Kannur', 'Wayanad', 'Idukki', 'Pathanamthitta', 'Alappuzha', 'Kasaragod',
+    'Darjeeling', 'Jalpaiguri', 'Cooch Behar', 'North 24 Parganas', 'South 24 Parganas',
+    'Alibag', 'Lonavala', 'Khandala', 'Mahabaleshwar', 'Panchgani', 'Matheran', 'Karjat',
+    'Shirdi', 'Nashik', 'Trimbak', 'Igatpuri', 'Dahanu', 'Dapoli', 'Ganpatipule', 'Tarkarli',
+    'Malvan', 'Sawantwadi', 'Vengurla', 'Kudal', 'Kankavli', 'Chiplun', 'Mahad', 'Pen',
+    'Uran', 'Kharghar', 'Kamothe', 'Airoli', 'Ghansoli', 'Vashi', 'Nerul', 'Belapur',
+    'Munnar', 'Thekkady', 'Alleppey', 'Kumarakom', 'Varkala', 'Kovalam', 'Wayanad',
+    'Vagamon', 'Ponmudi', 'Athirapally', 'Guruvayur', 'Kannur', 'Bekal', 'Kasargod',
+    'Kodaikanal', 'Ooty', 'Coonoor', 'Yercaud', 'Yelagiri', 'Valparai', 'Topslip',
+    'Pondicherry', 'Mahabalipuram', 'Kanchipuram', 'Vellore', 'Tirupati', 'Hampi',
+    'Gokarna', 'Udupi', 'Mangalore', 'Coorg', 'Chikmagalur', 'Hassan', 'Shimoga',
+    'Dandeli', 'Karwar', 'Sirsi', 'Jog Falls', 'Srirangapatna', 'Mandya', 'Tumkur',
+    'Manali', 'Shimla', 'Dharamshala', 'Dalhousie', 'Kasol', 'Kullu', 'Mandi', 'Chamba',
+    'Kasauli', 'Nainital', 'Mussoorie', 'Dehradun', 'Rishikesh', 'Haridwar', 'Almora',
+    'Ranikhet', 'Kausani', 'Lansdowne', 'Auli', 'Chopta', 'Kedarnath', 'Badrinath',
+    'New York', 'London', 'Paris', 'Tokyo', 'Dubai', 'Singapore', 'Sydney', 'Toronto',
+    'Los Angeles', 'Chicago', 'Houston', 'San Francisco', 'Seattle', 'Boston', 'Miami',
+    'Berlin', 'Rome', 'Madrid', 'Barcelona', 'Amsterdam', 'Brussels', 'Vienna', 'Prague',
+    'Bangkok', 'Hong Kong', 'Shanghai', 'Beijing', 'Seoul', 'Kuala Lumpur', 'Jakarta'
+];
+
+cityInput.addEventListener('input', (e) => {
+    const value = e.target.value.toLowerCase();
+    if (value.length < 2) {
+        locationSuggestions.innerHTML = '';
+        return;
+    }
+    
+    const matches = locationDatabase
+        .filter(location => location.toLowerCase().includes(value))
+        .slice(0, 10);
+    
+    locationSuggestions.innerHTML = matches
+        .map(location => `<option value="${location}"></option>`)
+        .join('');
+});
+
+let currentUnit = localStorage.getItem('temperatureUnit') || 'celsius';
+let currentWeatherData = null;
+
+window.addEventListener('DOMContentLoaded', () => {
+    unitToggleBtns.forEach(btn => {
+        if (btn.dataset.unit === currentUnit) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+});
+
+unitToggleBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const newUnit = btn.dataset.unit;
+        if (newUnit === currentUnit) return;
+        
+        currentUnit = newUnit;
+        localStorage.setItem('temperatureUnit', currentUnit);
+        
+        unitToggleBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        if (currentWeatherData) {
+            updateTemperatureDisplay();
+        }
+    });
+});
+
+function celsiusToFahrenheit(celsius) {
+    return (celsius * 9/5) + 32;
+}
+
+function convertTemperature(temp) {
+    if (currentUnit === 'fahrenheit') {
+        return Math.round(celsiusToFahrenheit(temp));
+    }
+    return Math.round(temp);
+}
+
+function getUnitSymbol() {
+    return currentUnit === 'celsius' ? '°C' : '°F';
+}
+
+function updateTemperatureDisplay() {
+    if (!currentWeatherData) return;
+    
+    const mainTemp = currentWeatherData.main.temp;
+    temperatureTxt.textContent = `${convertTemperature(mainTemp)}${getUnitSymbol()}`;
+    
+    const forecastItems = document.querySelectorAll('.forecast-item-temp');
+    currentWeatherData.forecastTemps.forEach((temp, index) => {
+        if (forecastItems[index]) {
+            forecastItems[index].textContent = `${convertTemperature(temp)}${getUnitSymbol()}`;
+        }
+    });
+}
+
+function validateCityInput(city) {
+    city = city.trim();
+    
+    if (city === '') {
+        return { valid: false, message: 'Please enter a city name' };
+    }
+    
+    if (city.length < 2) {
+        return { valid: false, message: 'City name is too short' };
+    }
+    if (city.length > 50) {
+        return { valid: false, message: 'City name is too long' };
+    }
+    
+    const validPattern = /^[a-zA-Z\s\-'\.]+$/;
+    if (!validPattern.test(city)) {
+        return { valid: false, message: 'Please enter a valid city name (letters only)' };
+    }
+    
+    return { valid: true, message: '' };
+}
+
+function showInputError(message) {
+    let errorElement = document.querySelector('.input-error-message');
+    if (!errorElement) {
+        errorElement = document.createElement('p');
+        errorElement.className = 'input-error-message';
+        const inputContainer = document.querySelector('.input-container');
+        inputContainer.appendChild(errorElement);
+    }
+    errorElement.textContent = message;
+    errorElement.style.display = 'block';
+    
+    setTimeout(() => {
+        errorElement.style.display = 'none';
+    }, 3000);
+}
+
 searchButton.addEventListener('click', () => {
-    if (cityInput.value.trim() === '') return;
-    updateWeatherInfo(cityInput.value)
+    const validation = validateCityInput(cityInput.value);
+    if (!validation.valid) {
+        showInputError(validation.message);
+        return;
+    }
+    updateWeatherInfo(cityInput.value.trim());
     cityInput.value = '';
     cityInput.blur();
 });
+
 cityInput.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter' && cityInput.value.trim() !== '') {
-        updateWeatherInfo(cityInput.value)
+    if (event.key === 'Enter') {
+        const validation = validateCityInput(cityInput.value);
+        if (!validation.valid) {
+            showInputError(validation.message);
+            return;
+        }
+        updateWeatherInfo(cityInput.value.trim());
         cityInput.value = '';
         cityInput.blur();
     }
@@ -39,37 +199,15 @@ async function getFetchData(endPoint, city) {
 }
 
 function getWeatherIcon(id) {
-    // Thunderstorm: 200-232
     if (id >= 200 && id <= 232) return 'thunderstorm.svg';
-    
-    // Drizzle: 300-321
     if (id >= 300 && id <= 321) return 'drizzle.svg';
-    
-    // Rain: 500-531
-    // 500: light rain, 501: moderate rain, 502-504: heavy rain, 511: freezing rain, 520-531: showers
     if (id >= 500 && id <= 531) return 'rain.svg';
-    
-    // Snow: 600-622
-    // 600: light snow, 601: snow, 602: heavy snow, 611-616: sleet/rain+snow, 620-622: showers
-    if (id === 600) return 'snow.svg'; // Light snow
-    if (id >= 601 && id <= 622) return 'snow.svg'; // All other snow
-    
-    // Atmosphere (Mist, Smoke, Haze, Dust, Fog, Sand, Ash, Squall, Tornado): 700-781
-    // 701: mist, 711: smoke, 721: haze, 731: dust/sand, 741: fog, 751: sand, 761: dust, 762: ash, 771: squall, 781: tornado
+    if (id === 600) return 'snow.svg';
+    if (id >= 601 && id <= 622) return 'snow.svg';
     if (id >= 700 && id <= 781) return 'atmosphere.svg';
-    
-    // Clear: 800
     if (id === 800) return 'clear.svg';
-    
-    // Clouds: 801-804
-    // 801: few clouds (11-25%)
-    // 802: scattered clouds (25-50%)
-    // 803: broken clouds (51-84%)
-    // 804: overcast clouds (85-100%)
     if (id === 801 || id === 802) return 'clouds.svg';
     if (id === 803 || id === 804) return 'mostly-cloudy.svg';
-    
-    // Default fallback
     return 'clouds.svg';
 }
 
@@ -81,6 +219,19 @@ function getCurrentDate() {
         month: 'short'
     };
     return currentDate.toLocaleDateString('en-GB', options);
+}
+
+function formatTime(timestamp) {
+    const date = new Date(timestamp * 1000);
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    const minutesStr = minutes < 10 ? '0' + minutes : minutes;
+    
+    return `${hours}:${minutesStr} ${ampm}`;
 }
 
 async function updateWeatherInfo(city) {
@@ -96,14 +247,22 @@ async function updateWeatherInfo(city) {
         main: { temp, humidity, pressure },
         weather: [{ id, main }],
         wind: { speed },
+        sys: { sunrise, sunset }
     } = weatherData;
 
+    currentWeatherData = {
+        main: { temp },
+        forecastTemps: []
+    };
+
     countryTxt.textContent = country;
-    temperatureTxt.textContent = `${Math.round(temp)}°C`;
+    temperatureTxt.textContent = `${convertTemperature(temp)}${getUnitSymbol()}`;
     descriptionTxt.textContent = main;
     humidityTxt.textContent = `${humidity}%`;
     pressureTxt.textContent = `${pressure} hPa`;
     windValueTxt.textContent = `${speed.toFixed(1)} M/s`;
+    sunriseTxt.textContent = formatTime(sunrise);
+    sunsetTxt.textContent = formatTime(sunset);
     weatherSummaryImg.src = `assets/weather/${getWeatherIcon(id)}`;
 
     await updateForecastInfo(city);
@@ -121,12 +280,14 @@ async function updateForecastInfo(city) {
     const todayDate = new Date().toISOString().split('T')[0];
 
     forecastItemsContainer.innerHTML = '';
+    currentWeatherData.forecastTemps = [];
 
     const filtered = forecastsData.list.filter(forecast => {
         return forecast.dt_txt.includes(timeTaken) && !forecast.dt_txt.includes(todayDate);
     });
 
     filtered.forEach(forecast => {
+        currentWeatherData.forecastTemps.push(forecast.main.temp);
         updateForecastItems(forecast);
     });
 }
@@ -143,7 +304,7 @@ function updateForecastItems(weatherData) {
         <div class="forecast-item">
             <h5 class="forecast-item-date regular-txt">${formattedDate}</h5>
             <img src="assets/weather/${getWeatherIcon(id)}" class="forecast-item-img" alt="">
-            <h5 class="forecast-item-temp">${Math.round(temp)}°C</h5>
+            <h5 class="forecast-item-temp">${convertTemperature(temp)}${getUnitSymbol()}</h5>
         </div>`;
 
     forecastItemsContainer.insertAdjacentHTML('beforeend', forecastItem);
