@@ -17,16 +17,10 @@
 
         <header class="input-container">
             <input class="city-input" placeholder="Search city, district, or village" type="text" autocomplete="off">
-            <div class="suggestions-dropdown"></div>
             <button class="search-btn">
                 <span class="material-symbols-outlined">search</span>
             </button>
         </header>
-
-        <div class="unit-toggle-container">
-            <button class="unit-toggle-btn active" data-unit="celsius">°C</button>
-            <button class="unit-toggle-btn" data-unit="fahrenheit">°F</button>
-        </div>
 
         <section class="weather-info" style="display: none;">
             <div class="location-date-container">
@@ -39,6 +33,11 @@
             <div class="weather-summary-container">
                 <img src="assets/weather/clouds.svg" alt="current weather" class="weather-summary-img">
                 <div class="weather-summary-info">
+                    <div class="temp-unit-slider">
+                        <div class="temp-slider-indicator"></div>
+                        <button class="temp-unit-option" data-unit="celsius">°C</button>
+                        <button class="temp-unit-option" data-unit="fahrenheit">°F</button>
+                    </div>
                     <h1 class="temp-text">25 °C</h1>
                     <h3 class="condition-txt regular-txt"> Cloudy </h3>
                 </div>

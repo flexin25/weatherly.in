@@ -164,6 +164,7 @@ body::before {
 }
 
 .suggestions-dropdown {
+    display: none;
     position: absolute;
     top: calc(100% + 5px);
     left: 0;
@@ -231,10 +232,10 @@ body::before {
 }
 
 .unit-toggle-container {
-    display: flex;
+    display: none;
     justify-content: center;
     gap: 0;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 99px;
     padding: 4px;
@@ -331,6 +332,51 @@ body::before {
     flex-direction: column;
     gap: 4px;
 }
+
+.temp-unit-slider {
+    align-self: flex-end;
+    position: relative;
+    display: flex;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 3px;
+    width: 70px;
+    margin-bottom: 2px;
+}
+
+.temp-slider-indicator {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: calc(50% - 3px);
+    height: calc(100% - 6px);
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 9px;
+    transition: transform 0.3s ease;
+    z-index: 0;
+}
+
+.temp-unit-slider.fahrenheit .temp-slider-indicator {
+    transform: translateX(100%);
+}
+
+.temp-unit-option {
+    flex: 1;
+    padding: 4px 0;
+    font-size: 11px;
+    font-weight: 600;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    z-index: 1;
+    position: relative;
+}
+
+.temp-unit-option:hover {
+    color: rgba(255, 255, 255, 0.9);
+}
+
 .temp-text{
     font-size: 42px;
     font-weight: 600;
@@ -379,17 +425,13 @@ body::before {
 .forecast-items-container{
     display: flex;
     flex-wrap: nowrap;
-    gap: 8px;
-    padding: 16px 12px;
+    gap: 10px;
+    padding: 4px 0;
     margin-top: 8px;
     margin-bottom: 12px;
+    max-width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 12px;
 }
 .forecast-items-container::-webkit-scrollbar{
     height: 6px;
@@ -404,14 +446,14 @@ body::before {
 }
 .forecast-item{
     background: rgba(255, 255, 255, 0.15);
-    padding: 12px 8px;
+    padding: 12px 10px;
     border-radius: 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
-    flex: 0 0 65px;
-    min-width: 65px;  
+    gap: 8px;
+    flex: 0 0 70px;
+    min-width: 70px;  
     transition: 0.3s background;
 }
 
@@ -420,17 +462,17 @@ body::before {
 }
 
 .forecast-item-date{
-    font-size: 11px;
-    font-weight: 600;
+    font-size: 12px;
+    font-weight: 400;
     white-space: nowrap;
 }
 .forecast-item-img{
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
     object-fit: contain;
 }
 .forest-item-temp{
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 600;
 }
 

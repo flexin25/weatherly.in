@@ -16,6 +16,8 @@ const currentDateTxt = document.querySelector('.current-date-txt');
 
 const forecastItemsContainer = document.querySelector('.forecast-items-container');
 const unitToggleBtns = document.querySelectorAll('.unit-toggle-btn');
+const tempUnitSlider = document.querySelector('.temp-unit-slider');
+const tempUnitOptions = document.querySelectorAll('.temp-unit-option');
 const suggestionsDropdown = document.querySelector('.suggestions-dropdown');
 
 const apiKey = '04c90abb0c88d8da11534c112a244bc9';
@@ -95,7 +97,45 @@ window.addEventListener('DOMContentLoaded', () => {
             btn.classList.remove('active');
         }
     });
+    
+    if (tempUnitSlider) {
+        if (currentUnit === 'fahrenheit') {
+            tempUnitSlider.classList.add('fahrenheit');
+        }
+    }
 });
+
+if (tempUnitOptions) {
+    tempUnitOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            const newUnit = option.dataset.unit;
+            if (newUnit === currentUnit) return;
+            
+            currentUnit = newUnit;
+            localStorage.setItem('temperatureUnit', currentUnit);
+            
+            if (tempUnitSlider) {
+                if (currentUnit === 'fahrenheit') {
+                    tempUnitSlider.classList.add('fahrenheit');
+                } else {
+                    tempUnitSlider.classList.remove('fahrenheit');
+                }
+            }
+            
+            unitToggleBtns.forEach(btn => {
+                if (btn.dataset.unit === currentUnit) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            if (currentWeatherData) {
+                updateTemperatureDisplay();
+            }
+        });
+    });
+}
 
 unitToggleBtns.forEach(btn => {
     btn.addEventListener('click', () => {
