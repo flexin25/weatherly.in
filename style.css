@@ -16,6 +16,7 @@ body {
     width: 100%;
     min-height: 100dvh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -489,3 +490,181 @@ body::before {
     object-fit: contain;
     margin-bottom: 12px;
 }
+
+/* AIR QUALITY PAGE STYLES */
+.zip-input {
+    width: 100%;
+    padding: 10px 16px;
+    border-radius: 99px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    border: solid 3px transparent;
+    background: rgba(255, 255, 255, 0.15);
+    transition: border 0.3s ease;
+    color: rgb(255, 255, 255);
+    padding-right: 45px;
+}
+
+.zip-input:focus {
+    border: solid 3px rgba(255, 255, 255, 0.75);
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.zip-input::placeholder {
+    color: rgb(255, 255, 255, 0.75);
+    font-size: 14px;
+}
+
+.air-quality-info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.air-quality-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 6px 0;
+}
+
+.air-quality-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+}
+
+.air-quality-item .material-symbols-outlined {
+    font-size: 24px;
+    opacity: 0.9;
+}
+
+.air-quality-item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.air-quality-item-info h5:first-child {
+    font-size: 10px;
+    opacity: 0.8;
+    font-weight: 400;
+}
+
+.air-quality-item-info h5:last-child {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.aqi-badge {
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-size: 11px !important;
+    color: white;
+    display: inline-block;
+}
+
+.pollutants-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    opacity: 0.9;
+}
+
+.pollutants-container {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 10px;
+    padding: 4px 0;
+    margin-bottom: 8px;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+.pollutants-container::-webkit-scrollbar {
+    height: 6px;
+}
+
+.pollutants-container::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.pollutants-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+
+.pollutant-item {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 12px 10px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    flex: 0 0 70px;
+    min-width: 70px;
+    transition: 0.3s background;
+}
+
+.pollutant-item:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
+
+.pollutant-name {
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.pollutant-value {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.pollutant-unit {
+    font-size: 9px;
+    opacity: 0.7;
+    white-space: nowrap;
+}
+/* END AIR QUALITY PAGE STYLES */
+
+/* DASHBOARD BUTTON */
+.dashboard-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 16px;
+    margin-top: 16px;
+    width: 300px;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    border-radius: 15px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.dashboard-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.dashboard-btn .material-symbols-outlined {
+    font-size: 18px;
+}
+/* END DASHBOARD BUTTON */

@@ -88,6 +88,7 @@ document.addEventListener('click', (e) => {
 
 let currentUnit = localStorage.getItem('temperatureUnit') || 'celsius';
 let currentWeatherData = null;
+let currentLocationData = null;
 
 window.addEventListener('DOMContentLoaded', () => {
     unitToggleBtns.forEach(btn => {
@@ -183,26 +184,31 @@ function updateTemperatureDisplay() {
     });
 }
 
-function validateCityInput(city) {
-    city = city.trim();
+function validateCityInput(input) {
+    input = input.trim();
     
-    if (city === '') {
-        return { valid: false, message: 'Please enter a city name' };
+    if (input === '') {
+        return { valid: false, message: 'Please enter a city name or zip code' };
     }
     
-    if (city.length < 2) {
-        return { valid: false, message: 'City name is too short' };
+    if (input.length < 2) {
+        return { valid: false, message: 'Input is too short' };
     }
-    if (city.length > 50) {
-        return { valid: false, message: 'City name is too long' };
-    }
-    
-    const validPattern = /^[a-zA-Z\s\-'\.]+$/;
-    if (!validPattern.test(city)) {
-        return { valid: false, message: 'Please enter a valid city name (letters only)' };
+    if (input.length > 50) {
+        return { valid: false, message: 'Input is too long' };
     }
     
-    return { valid: true, message: '' };
+    const zipWithCountryPattern = /^\d{3,10},[A-Z]{2}$/i;
+    const zipOnlyPattern = /^\d{5,10}$/;
+    const cityPattern = /^[a-zA-Z\s\-'\.]+$/;
+    
+    const isZipCode = zipWithCountryPattern.test(input) || zipOnlyPattern.test(input);
+    
+    if (!isZipCode && !cityPattern.test(input)) {
+        return { valid: false, message: 'Please enter a valid city name or zip code' };
+    }
+    
+    return { valid: true, message: '', isZipCode: isZipCode };
 }
 
 function showInputError(message) {
@@ -227,7 +233,7 @@ searchButton.addEventListener('click', () => {
         showInputError(validation.message);
         return;
     }
-    updateWeatherInfo(cityInput.value.trim());
+    updateWeatherInfo(cityInput.value.trim(), validation.isZipCode);
     cityInput.value = '';
     cityInput.blur();
 });
@@ -239,7 +245,7 @@ cityInput.addEventListener('keydown', (event) => {
             showInputError(validation.message);
             return;
         }
-        updateWeatherInfo(cityInput.value.trim());
+        updateWeatherInfo(cityInput.value.trim(), validation.isZipCode);
         cityInput.value = '';
         cityInput.blur();
     }
@@ -274,8 +280,21 @@ function getCurrentDate() {
     return currentDate.toLocaleDateString('en-GB', options);
 }
 
-async function updateWeatherInfo(city) {
-    const weatherData = await getFetchData('weather', city);
+async function updateWeatherInfo(input, isZipCode = false) {
+    let weatherData;
+    
+    if (isZipCode) {
+        let zipParam = input;
+        if (!input.includes(',')) {
+            zipParam = `${input},US`;
+        }
+        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zipParam}&appid=${apiKey}&units=metric`;
+        const response = await fetch(apiUrl);
+        weatherData = await response.json();
+    } else {
+        weatherData = await getFetchData('weather', input);
+    }
+    
     if (weatherData.cod != 200) {
         showDisplaySection(notFoundSection);
         return;
@@ -286,12 +305,19 @@ async function updateWeatherInfo(city) {
         name: country,
         main: { temp, humidity, pressure },
         weather: [{ id, main }],
-        wind: { speed }
+        wind: { speed },
+        coord: { lat, lon }
     } = weatherData;
 
     currentWeatherData = {
         main: { temp },
         forecastTemps: []
+    };
+    
+    currentLocationData = {
+        lat: lat,
+        lon: lon,
+        name: country
     };
 
     countryTxt.textContent = country;
@@ -302,15 +328,33 @@ async function updateWeatherInfo(city) {
     windValueTxt.textContent = `${speed.toFixed(1)} M/s`;
     weatherSummaryImg.src = `assets/weather/${getWeatherIcon(id)}`;
 
-    await updateForecastInfo(city);
+    await updateForecastInfo(input, isZipCode);
 
     currentDateTxt.textContent = getCurrentDate();
+    
+    const dashboardBtn = document.getElementById('dashboardBtn');
+    if (dashboardBtn && currentLocationData) {
+        dashboardBtn.href = `airquality.html?lat=${currentLocationData.lat}&lon=${currentLocationData.lon}&name=${encodeURIComponent(currentLocationData.name)}`;
+        dashboardBtn.style.display = 'flex';
+    }
 
     showDisplaySection(weatherInfoSection);
 }
 
-async function updateForecastInfo(city) {
-    const forecastsData = await getFetchData('forecast', city);
+async function updateForecastInfo(input, isZipCode = false) {
+    let forecastsData;
+    
+    if (isZipCode) {
+        let zipParam = input;
+        if (!input.includes(',')) {
+            zipParam = `${input},US`;
+        }
+        const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?zip=${zipParam}&appid=${apiKey}&units=metric`;
+        const response = await fetch(apiUrl);
+        forecastsData = await response.json();
+    } else {
+        forecastsData = await getFetchData('forecast', input);
+    }
     if (!forecastsData || !forecastsData.list) return;
 
     const timeTaken = '12:00:00';

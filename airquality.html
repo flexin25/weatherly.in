@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Air Quality - Weatherly</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="style.css">
+    <script src="airquality.js" defer></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+</head>
+
+<body>
+    <main class="main-container">
+
+        <section class="air-quality-info" style="display: none;">
+            <div class="location-date-container">
+                <div class="location">
+                    <span class="material-symbols-outlined">location_on</span>
+                    <h4 class="country-txt">New York</h4>
+                </div>
+                <h5 class="current-date-txt regular-txt">Thu, 11 Dec</h5>
+            </div>
+
+            <div class="air-quality-grid">
+                <div class="air-quality-item">
+                    <span class="material-symbols-outlined">wb_twilight</span>
+                    <div class="air-quality-item-info">
+                        <h5 class="regular-txt">Sunrise</h5>
+                        <h5 class="sunrise-txt">06:30 AM</h5>
+                    </div>
+                </div>
+
+                <div class="air-quality-item">
+                    <span class="material-symbols-outlined">wb_twilight</span>
+                    <div class="air-quality-item-info">
+                        <h5 class="regular-txt">Sunset</h5>
+                        <h5 class="sunset-txt">05:45 PM</h5>
+                    </div>
+                </div>
+
+                <div class="air-quality-item">
+                    <span class="material-symbols-outlined">visibility</span>
+                    <div class="air-quality-item-info">
+                        <h5 class="regular-txt">Visibility</h5>
+                        <h5 class="visibility-txt">10 km</h5>
+                    </div>
+                </div>
+
+                <div class="air-quality-item">
+                    <span class="material-symbols-outlined">air</span>
+                    <div class="air-quality-item-info">
+                        <h5 class="regular-txt">AQI</h5>
+                        <h5 class="aqi-value-txt aqi-badge">Good</h5>
+                    </div>
+                </div>
+            </div>
+
+            <h4 class="pollutants-title">Air Pollutants</h4>
+            <div class="pollutants-container">
+                <div class="pollutant-item">
+                    <h5 class="pollutant-name">PM2.5</h5>
+                    <h5 class="pollutant-value pm25-txt">12.5</h5>
+                    <h6 class="pollutant-unit regular-txt">µg/m³</h6>
+                </div>
+
+                <div class="pollutant-item">
+                    <h5 class="pollutant-name">PM10</h5>
+                    <h5 class="pollutant-value pm10-txt">25.0</h5>
+                    <h6 class="pollutant-unit regular-txt">µg/m³</h6>
+                </div>
+
+                <div class="pollutant-item">
+                    <h5 class="pollutant-name">CO</h5>
+                    <h5 class="pollutant-value co-txt">0.3</h5>
+                    <h6 class="pollutant-unit regular-txt">mg/m³</h6>
+                </div>
+
+                <div class="pollutant-item">
+                    <h5 class="pollutant-name">NO₂</h5>
+                    <h5 class="pollutant-value no2-txt">20.5</h5>
+                    <h6 class="pollutant-unit regular-txt">µg/m³</h6>
+                </div>
+
+                <div class="pollutant-item">
+                    <h5 class="pollutant-name">O₃</h5>
+                    <h5 class="pollutant-value o3-txt">45.2</h5>
+                    <h6 class="pollutant-unit regular-txt">µg/m³</h6>
+                </div>
+
+                <div class="pollutant-item">
+                    <h5 class="pollutant-name">SO₂</h5>
+                    <h5 class="pollutant-value so2-txt">8.5</h5>
+                    <h6 class="pollutant-unit regular-txt">µg/m³</h6>
+                </div>
+            </div>
+        </section>
+
+        <section class="search-city section-message">
+            <img src="assets/message/search-city.png" alt="search" class="">
+            <div>
+                <h1>Loading...</h1>
+                <h4 class="regular-txt">
+                    Fetching air quality data
+                </h4>
+            </div>
+        </section>
+
+        <section class="not-found section-message" style="display: none;">
+            <img src="assets/message/not-found.png" alt="search" class="">
+            <div>
+                <h1>Error 404 Gang!</h1>
+                <h4 class="regular-txt">
+                    Location not Found Dawg !!
+                </h4>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>
