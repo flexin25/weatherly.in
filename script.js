@@ -28,17 +28,28 @@ const infoBtn = document.querySelector('.info-btn');
 const searchHint = document.querySelector('.search-hint');
 
 if (infoBtn && searchHint) {
-    infoBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        if (searchHint.style.display === 'none' || searchHint.style.display === '') {
-            searchHint.style.display = 'flex';
-        } else {
-            searchHint.style.display = 'none';
-        }
+    // Show hint on hover
+    infoBtn.addEventListener('mouseenter', () => {
+        searchHint.style.display = 'flex';
+    });
+    
+    // Hide hint when mouse leaves both button and hint
+    infoBtn.addEventListener('mouseleave', () => {
+        setTimeout(() => {
+            if (!searchHint.matches(':hover')) {
+                searchHint.style.display = 'none';
+            }
+        }, 100);
+    });
+    
+    searchHint.addEventListener('mouseleave', () => {
+        searchHint.style.display = 'none';
     });
 }
 
 async function fetchCitySuggestions(query) {
+    if (!suggestionsDropdown) return;
+    
     if (query.length < 2) {
         suggestionsDropdown.style.display = 'none';
         return;
@@ -60,6 +71,8 @@ async function fetchCitySuggestions(query) {
 }
 
 function displaySuggestions(locations) {
+    if (!suggestionsDropdown) return;
+    
     const suggestionItems = locations.map(location => {
         const cityName = location.name;
         const stateName = location.state ? `, ${location.state}` : '';
@@ -84,6 +97,8 @@ cityInput.addEventListener('input', (e) => {
     clearTimeout(debounceTimer);
     const query = e.target.value.trim();
     
+    if (!suggestionsDropdown) return;
+    
     if (query.length < 2) {
         suggestionsDropdown.style.display = 'none';
         return;
@@ -95,7 +110,7 @@ cityInput.addEventListener('input', (e) => {
 });
 
 document.addEventListener('click', (e) => {
-    if (!e.target.closest('.input-container')) {
+    if (suggestionsDropdown && !e.target.closest('.input-container')) {
         suggestionsDropdown.style.display = 'none';
     }
 });
