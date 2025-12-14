@@ -18,7 +18,6 @@ const forecastItemsContainer = document.querySelector('.forecast-items-container
 const unitToggleBtns = document.querySelectorAll('.unit-toggle-btn');
 const tempUnitSlider = document.querySelector('.temp-unit-slider');
 const tempUnitOptions = document.querySelectorAll('.temp-unit-option');
-const suggestionsDropdown = document.querySelector('.suggestions-dropdown');
 
 const apiKey = config.OPENWEATHER_API_KEY;
 
@@ -47,73 +46,7 @@ if (infoBtn && searchHint) {
     });
 }
 
-async function fetchCitySuggestions(query) {
-    if (!suggestionsDropdown) return;
-    
-    if (query.length < 2) {
-        suggestionsDropdown.style.display = 'none';
-        return;
-    }
-    
-    try {
-        const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(query)}&limit=8&appid=${apiKey}`);
-        const data = await response.json();
-        
-        if (data.length > 0) {
-            displaySuggestions(data);
-        } else {
-            suggestionsDropdown.style.display = 'none';
-        }
-    } catch (error) {
-        console.error('Error fetching suggestions:', error);
-        suggestionsDropdown.style.display = 'none';
-    }
-}
 
-function displaySuggestions(locations) {
-    if (!suggestionsDropdown) return;
-    
-    const suggestionItems = locations.map(location => {
-        const cityName = location.name;
-        const stateName = location.state ? `, ${location.state}` : '';
-        const countryName = location.country;
-        return `<div class="suggestion-item" data-city="${cityName}">${cityName}${stateName}, ${countryName}</div>`;
-    }).join('');
-    
-    suggestionsDropdown.innerHTML = suggestionItems;
-    suggestionsDropdown.style.display = 'block';
-    
-    document.querySelectorAll('.suggestion-item').forEach(item => {
-        item.addEventListener('click', () => {
-            const cityName = item.getAttribute('data-city');
-            cityInput.value = cityName;
-            suggestionsDropdown.style.display = 'none';
-            updateWeatherInfo(cityName);
-        });
-    });
-}
-
-cityInput.addEventListener('input', (e) => {
-    clearTimeout(debounceTimer);
-    const query = e.target.value.trim();
-    
-    if (!suggestionsDropdown) return;
-    
-    if (query.length < 2) {
-        suggestionsDropdown.style.display = 'none';
-        return;
-    }
-    
-    debounceTimer = setTimeout(() => {
-        fetchCitySuggestions(query);
-    }, 300);
-});
-
-document.addEventListener('click', (e) => {
-    if (suggestionsDropdown && !e.target.closest('.input-container')) {
-        suggestionsDropdown.style.display = 'none';
-    }
-});
 
 let currentUnit = localStorage.getItem('temperatureUnit') || 'celsius';
 let currentWeatherData = null;
