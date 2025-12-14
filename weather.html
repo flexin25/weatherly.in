@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weatherly</title>
-    <link rel="icon" href="data:,">
+    <title>⛅ Weatherly</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22></text></svg>">
     <link rel="stylesheet" href="style.css">
+    <script src="config.js"></script>
     <script src="script.js" defer></script>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
@@ -20,7 +21,15 @@
             <button class="search-btn">
                 <span class="material-symbols-outlined">search</span>
             </button>
+            <button class="info-btn" title="Zip code format help">
+                <span class="material-symbols-outlined">info</span>
+            </button>
         </header>
+
+        <div class="search-hint" style="display: none;">
+            <span class="material-symbols-outlined">lightbulb</span>
+            <p>Tip: For zip code search, use format: <strong>pincode,country</strong> (e.g., 700001,IN or 10001,US)</p>
+        </div>
 
         <section class="weather-info" style="display: none;">
             <div class="location-date-container">

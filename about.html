@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - Weatherly</title>
-    <link rel="icon" href="data:,">
+    <title>⛅ About - Weatherly</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛅</text></svg>">
     <link rel="stylesheet" href="home-style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -45,7 +45,9 @@
                     <li><strong>Real-Time Weather Data:</strong> Get up-to-date weather information powered by OpenWeatherMap API</li>
                     <li><strong>Comprehensive Metrics:</strong> View temperature, humidity, atmospheric pressure, and wind speed</li>
                     <li><strong>5-Day Forecast:</strong> Plan your week with extended weather predictions</li>
-                    <li><strong>Search Any City:</strong> Access weather data for cities worldwide</li>
+                    <li><strong>Air Quality Index:</strong> Monitor real-time AQI levels and air pollution data for any city</li>
+                    <li><strong>Pollutants Tracking:</strong> Track detailed pollutant levels including PM2.5, PM10, CO, NO₂, O₃, and SO₂</li>
+                    <li><strong>Search Any City:</strong> Access weather and air quality data for cities worldwide</li>
                     <li><strong>Responsive Design:</strong> Seamlessly works across all devices</li>
                     <li><strong>Glassmorphic UI:</strong> Modern, blurred-glass interface design</li>
                 </ul>
@@ -56,37 +58,40 @@
                 <p>Weatherly is built using vanilla HTML, CSS, and JavaScript, demonstrating that powerful applications don't always need heavy frameworks. The app leverages modern CSS features like backdrop-filter for the glassmorphic design and the Fetch API for seamless data retrieval.</p>
             </div>
 
-            <div class="about-section">
-                <h2>Data Source</h2>
-                <p>Weather data is provided by <strong>OpenWeatherMap API</strong>, ensuring accurate and reliable information from weather stations around the world.</p>
-            </div>
-
             <a href="weather.html" class="cta-btn">Try Weatherly Now</a>
         </div>
     </main>
 
-    <footer class="w-full py-4 text-center text-white/80 backdrop-blur-lg">
-        <h3 class="text-lg font-medium mb-4">Built with</h3>
+    <footer class="w-full py-6 text-center text-white/80 backdrop-blur-lg">
+        <h3 class="text-lg font-medium mb-4">Connect with me</h3>
+        <div class="flex justify-center items-center gap-6 mb-6">
+            <!-- GitHub -->
+            <a href="https://github.com/flexin25" target="_blank" rel="noopener noreferrer" class="social-icon-glass">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub"
+                    class="w-8 h-8" style="filter: brightness(0) invert(1);" />
+            </a>
 
-        <div class="flex justify-center gap-8 mb-4">
-            <div class="flex flex-col items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
-                     alt="HTML5" class="w-10 h-10" />
-                <span class="mt-2 text-sm">HTML</span>
-            </div>
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/flexin25_" target="_blank" rel="noopener noreferrer" class="social-icon-glass">
+                <svg class="w-8 h-8" viewBox="0 0 24 24" fill="white">
+                    <defs>
+                        <linearGradient id="instagram-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#FED576" />
+                            <stop offset="25%" style="stop-color:#F47133" />
+                            <stop offset="50%" style="stop-color:#BC3081" />
+                            <stop offset="100%" style="stop-color:#4C63D2" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+            </a>
 
-           
-            <div class="flex flex-col items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
-                     alt="CSS3" class="w-10 h-10" />
-                <span class="mt-2 text-sm">CSS</span>
-            </div>
-
-            <div class="flex flex-col items-center">
-                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
-                     alt="JavaScript" class="w-10 h-10" />
-                <span class="mt-2 text-sm">JavaScript</span>
-            </div>
+            <!-- Twitter/X -->
+            <a href="https://twitter.com/1mflexin_" target="_blank" rel="noopener noreferrer" class="social-icon-glass">
+                <svg class="w-8 h-8" viewBox="0 0 24 24" fill="white">
+                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                </svg>
+            </a>
         </div>
 
         <p class="text-white/60 text-sm">© 2025 Abhishek Bardhan. All rights reserved.</p>

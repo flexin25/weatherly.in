@@ -16,7 +16,7 @@ const no2Txt = document.querySelector('.no2-txt');
 const o3Txt = document.querySelector('.o3-txt');
 const so2Txt = document.querySelector('.so2-txt');
 
-const apiKey = '04c90abb0c88d8da11534c112a244bc9';
+const apiKey = config.OPENWEATHER_API_KEY;
 
 function updateDate() {
     const currentDate = new Date();

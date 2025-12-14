@@ -20,9 +20,23 @@ const tempUnitSlider = document.querySelector('.temp-unit-slider');
 const tempUnitOptions = document.querySelectorAll('.temp-unit-option');
 const suggestionsDropdown = document.querySelector('.suggestions-dropdown');
 
-const apiKey = '04c90abb0c88d8da11534c112a244bc9';
+const apiKey = config.OPENWEATHER_API_KEY;
 
 let debounceTimer;
+
+const infoBtn = document.querySelector('.info-btn');
+const searchHint = document.querySelector('.search-hint');
+
+if (infoBtn && searchHint) {
+    infoBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (searchHint.style.display === 'none' || searchHint.style.display === '') {
+            searchHint.style.display = 'flex';
+        } else {
+            searchHint.style.display = 'none';
+        }
+    });
+}
 
 async function fetchCitySuggestions(query) {
     if (query.length < 2) {
