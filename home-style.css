@@ -417,6 +417,15 @@ body::before {
     transform: translateZ(0);
 }
 
+.about-stack {
+    max-width: 1200px;
+    width: 100%;
+}
+
+.about-contact {
+    margin-top: 40px;
+}
+
 .page-title {
     font-size: 48px;
     font-weight: 700;
@@ -478,10 +487,11 @@ body::before {
     text-decoration: none;
     font-size: 16px;
     font-weight: 600;
-    border-radius: 50px;
+    border-radius: 60px;
     transition: transform 0.15s ease, background 0.15s ease;
     transform: translateZ(0);
     margin-top: 20px;
+    margin-bottom: 40px;
 }
 
 @media (hover: hover) {
@@ -595,7 +605,7 @@ body::before {
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 30px;
-    padding: 50px;
+    padding: 40px;
 }
 
 .contact-title {
@@ -788,6 +798,10 @@ body::before {
     .profile-card,
     .contact-section {
         padding: 30px;
+    }
+
+    .about-contact {
+        margin-top: 30px;
     }
 
     .form-row {
