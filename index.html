@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weatherly - Home</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛅</text></svg>">
+    <link rel="stylesheet" href="home-style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">Weatherly &lt;/&gt;</a>
+        <div class="nav-links">
+            <a href="about.html" class="nav-link">About</a>
+            <a href="info.html" class="nav-link">Info</a>
+        </div>
+    </nav>
+
+    <!-- Animated Clouds -->
+    <div class="clouds">
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+    </div>
+
+    <!-- Hero Section -->
+    <main class="hero-container">
+        <div class="hero-content">
+            <h1 class="hero-title">Weatherly</h1>
+            <p class="hero-subtitle">Your Sleek Weather & Air Quality Companion</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="material-symbols-outlined">thermostat</span>
+                    <h3>Real-Time Temperature</h3>
+                    <p>Get accurate current temperature readings in Celsius</p>
+                </div>
+
+                <div class="feature-card">
+                    <span class="material-symbols-outlined">cloud</span>
+                    <h3>Weather Conditions</h3>
+                    <p>View current weather status with intuitive icons</p>
+                </div>
+
+                <div class="feature-card">
+                    <span class="material-symbols-outlined">water_drop</span>
+                    <h3>Humidity Levels</h3>
+                    <p>Monitor atmospheric moisture percentage</p>
+                </div>
+
+                <div class="feature-card">
+                    <span class="material-symbols-outlined">speed</span>
+                    <h3>Atmospheric Pressure</h3>
+                    <p>Track barometric pressure in hectopascals</p>
+                </div>
+
+                <div class="feature-card">
+                    <span class="material-symbols-outlined">air</span>
+                    <h3>Wind Speed</h3>
+                    <p>Stay informed about wind conditions in m/s</p>
+                </div>
+
+                <div class="feature-card">
+                    <span class="material-symbols-outlined">calendar_month</span>
+                    <h3>5-Day Forecast</h3>
+                    <p>Plan ahead with extended weather predictions</p>
+                </div>
+
+                <div class="feature-card">
+                    <span class="material-symbols-outlined">eco</span>
+                    <h3>Air Quality Index</h3>
+                    <p>Monitor real-time AQI and pollution levels</p>
+                </div>
+
+                <div class="feature-card">
+                    <span class="material-symbols-outlined">science</span>
+                    <h3>Pollutants Data</h3>
+                    <p>Track PM2.5, PM10, CO, NO<sub>2</sub>, O<sub>3</sub>, and SO<sub>2</sub> levels</p>
+                </div>
+            </div>
+
+            <a href="weather.html" class="enter-btn">
+                <span>Enter Weatherly</span>
+                <span class="material-symbols-outlined">arrow_forward</span>
+            </a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full py-6 text-center text-white/80 backdrop-blur-lg">
+        <h3 class="text-lg font-medium mb-4">Connect with me</h3>
+        <div class="flex justify-center items-center gap-6 mb-6">
+            <!-- GitHub -->
+            <a href="https://github.com/flexin25" target="_blank" rel="noopener noreferrer" class="social-icon-glass">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub"
+                    class="w-8 h-8" style="filter: brightness(0) invert(1);" />
+            </a>
+
+            <!-- Instagram -->
+            <a href="https://www.instagram.com/flexin25_" target="_blank" rel="noopener noreferrer" class="social-icon-glass">
+                <svg class="w-8 h-8" viewBox="0 0 24 24" fill="white">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                </svg>
+            </a>
+
+            <!-- Twitter/X -->
+            <a href="https://twitter.com/1mflexin_" target="_blank" rel="noopener noreferrer" class="social-icon-glass">
+                <svg class="w-8 h-8" viewBox="0 0 24 24" fill="white">
+                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                </svg>
+            </a>
+        </div>
+
+        <p class="text-white/60 text-sm">© 2025 Abhishek Bardhan. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

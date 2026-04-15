@@ -1,0 +1,33 @@
+## For Developers Cloning This Repo:
+
+1. Copy `.env.example` to `.env`:
+   ```bash
+   copy .env.example .env
+   ```
+
+2. Get your free API key from [OpenWeatherMap](https://openweathermap.org/api)
+
+3. Edit `.env` and replace `your_api_key_here` with your actual key
+
+4. The app will work immediately!
+
+## 📍 Zip Code Format:
+
+When searching by zip/postal code in Weatherly, use this format:
+
+**Format:** `{zip code},{country code}`
+
+**Examples:**
+- India: `700001,IN` (Kolkata)
+- USA: `10001,US` (New York)
+- UK: `SW1,GB` (London)
+- Canada: `M5H,CA` (Toronto)
+- Australia: `2000,AU` (Sydney)
+
+**Country Code:** Use ISO 3166-1 alpha-2 (2-letter codes)
+- See full list: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+
+---
+
+**Current Status:** ✅ API key moved from public code, protected in .env file  
+**Next Step:** Consider implementing a backend server for production use
