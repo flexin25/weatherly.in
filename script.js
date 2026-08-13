@@ -60,8 +60,6 @@ function setImageWithFallback(imgElem, src, fallbackSrc) {
 const tempUnitSlider = document.querySelector('.temp-unit-slider');
 const tempUnitOptions = document.querySelectorAll('.temp-unit-option');
 
-const API_BASE = config.API_BASE;
-
 function toTitleCase(text) {
     return text
         .split(' ')
@@ -355,7 +353,7 @@ cityInput.addEventListener('keydown', (event) => {
 });
 
 async function getFetchData(endPoint, city) {
-    const apiUrl = `${API_BASE}?endpoint=${endPoint}&q=${encodeURIComponent(city)}&units=metric`;
+    const apiUrl = config.buildUrl(endPoint, { q: city });
     const response = await fetch(apiUrl);
     return response.json();
 }
@@ -388,10 +386,8 @@ async function updateWeatherInfo(input, isZipCode = false) {
 
         if (isZipCode) {
             let zipParam = input;
-            if (!input.includes(',')) {
-                zipParam = `${input},US`;
-            }
-            const apiUrl = `${API_BASE}?endpoint=weather&zip=${encodeURIComponent(zipParam)}&units=metric`;
+            if (!input.includes(',')) zipParam = `${input},US`;
+            const apiUrl = config.buildUrl('weather', { zip: zipParam });
             weatherData = await fetchOpenWeatherJson(apiUrl);
         } else {
             weatherData = await getFetchData('weather', input);
@@ -489,12 +485,9 @@ async function updateForecastInfo(input, isZipCode = false) {
     let forecastsData;
 
     if (isZipCode) {
-        const apiKey = getActiveApiKey();
         let zipParam = input;
-        if (!input.includes(',')) {
-            zipParam = `${input},US`;
-        }
-        const apiUrl = `${API_BASE}?endpoint=forecast&zip=${encodeURIComponent(zipParam)}&units=metric`;
+        if (!input.includes(',')) zipParam = `${input},US`;
+        const apiUrl = config.buildUrl('forecast', { zip: zipParam });
         const response = await fetch(apiUrl);
         forecastsData = await response.json();
     } else {

@@ -16,7 +16,6 @@ const no2Txt = document.querySelector('.no2-txt');
 const o3Txt = document.querySelector('.o3-txt');
 const so2Txt = document.querySelector('.so2-txt');
 
-const API_BASE = config.API_BASE;
 
 function updateDate() {
     const currentDate = new Date();
@@ -52,28 +51,20 @@ function getAQILevel(aqi) {
 
 async function getWeatherData(lat, lon) {
     try {
-        const response = await fetch(
-            `${API_BASE}?endpoint=weather&lat=${lat}&lon=${lon}&units=metric`
-        );
-        const data = await response.json();
-        return data;
+        const response = await fetch(config.buildUrl('weather', { lat, lon }));
+        return await response.json();
     } catch (error) {
         throw error;
     }
-    return data;
 }
 
 async function getAirPollutionData(lat, lon) {
     try {
-        const response = await fetch(
-            `${API_BASE}?endpoint=air_pollution&lat=${lat}&lon=${lon}`
-        );
-        const data = await response.json();
-        return data;
+        const response = await fetch(config.buildUrl('air_pollution', { lat, lon }));
+        return await response.json();
     } catch (error) {
         throw error;
     }
-    return data;
 }
 
 function setSectionMessage(section, title, subtitle) {
