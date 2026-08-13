@@ -25,10 +25,12 @@ function isUsableApiKey(value) {
 }
 
 function pickApiKeyFromSource(source) {
-    const directKey = normalizeApiKey(source?.OPENWEATHER_API_KEY);
+    if (!source || typeof source !== 'object') return '';
+
+    const directKey = normalizeApiKey(source.OPENWEATHER_API_KEY);
     if (isUsableApiKey(directKey)) return directKey;
 
-    if (Array.isArray(source?.OPENWEATHER_API_KEYS)) {
+    if (Array.isArray(source.OPENWEATHER_API_KEYS)) {
         const firstValid = source.OPENWEATHER_API_KEYS
             .map(normalizeApiKey)
             .find(isUsableApiKey);
@@ -79,7 +81,9 @@ function resolveConfiguredApiKey(source, win) {
 }
 
 const config = {
-    OPENWEATHER_API_KEY: resolveConfiguredApiKey(localConfig, windowObject)
+    OPENWEATHER_API_KEY: resolveConfiguredApiKey(localConfig, windowObject),
+    API_KEY_STORAGE_KEY,
+    hasValidApiKey: isUsableApiKey
 };
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = config;
