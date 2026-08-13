@@ -41,14 +41,14 @@ function setImageWithFallback(imgElem, src, fallbackSrc) {
     const resolvedFallback = fallbackSrc || buildInlineWeatherFallback('clouds.svg');
     try {
         const tester = new Image();
-        tester.onload = function() {
+        tester.onload = function () {
             imgElem.src = src;
         };
-        tester.onerror = function() {
+        tester.onerror = function () {
             imgElem.src = resolvedFallback;
         };
         tester.src = src;
-        imgElem.onerror = function() {
+        imgElem.onerror = function () {
             imgElem.onerror = null;
             imgElem.src = resolvedFallback;
         };
@@ -74,17 +74,48 @@ function toTitleCase(text) {
 }
 
 function hasValidApiKey(key) {
-    const normalized = key.toLowerCase();
+    if (typeof config !== 'undefined' && config && typeof config.hasValidApiKey === 'function') {
+        return config.hasValidApiKey(key);
+    }
+    const normalized = typeof key === 'string' ? key.trim().toLowerCase() : '';
     const placeholders = [
         '',
         'your_actual_api_key',
         'your_api_key_here',
-        'replace_with_your_openweather_api_key'
+        'replace_with_your_openweather_api_key',
+        'your_real_api_key_here',
+        'your_primary_api_key_here',
+        'your_backup_api_key_here'
     ];
     return !placeholders.includes(normalized);
 }
 
-const apiKey = resolveApiKey();
+function readApiKeyFromQuery() {
+    const params = new URLSearchParams(window.location.search);
+    return (params.get('apiKey') || params.get('apikey') || params.get('appid') || '').trim();
+}
+
+function readApiKeyFromStorage() {
+    try {
+        return (localStorage.getItem(API_KEY_STORAGE_KEY) || '').trim();
+    } catch (error) {
+        console.warn('Unable to read API key from localStorage:', error);
+        return '';
+    }
+}
+
+function getActiveApiKey() {
+    const configuredKey = resolveApiKey();
+    if (hasValidApiKey(configuredKey)) return configuredKey;
+
+    const queryKey = readApiKeyFromQuery();
+    if (hasValidApiKey(queryKey)) return queryKey;
+
+    const storedKey = readApiKeyFromStorage();
+    if (hasValidApiKey(storedKey)) return storedKey;
+
+    return configuredKey;
+}
 
 const infoBtn = document.querySelector('.info-btn');
 const searchHint = document.querySelector('.search-hint');
@@ -308,7 +339,7 @@ searchButton.addEventListener('click', () => {
         showInputError(validation.message);
         return;
     }
-    if (!hasValidApiKey(apiKey)) {
+    if (!hasValidApiKey(getActiveApiKey())) {
         showApiSetupError();
         return;
     }
@@ -324,7 +355,7 @@ cityInput.addEventListener('keydown', (event) => {
             showInputError(validation.message);
             return;
         }
-        if (!hasValidApiKey(apiKey)) {
+        if (!hasValidApiKey(getActiveApiKey())) {
             showApiSetupError();
             return;
         }
@@ -335,6 +366,7 @@ cityInput.addEventListener('keydown', (event) => {
 });
 
 async function getFetchData(endPoint, city) {
+    const apiKey = getActiveApiKey();
     const apiUrl = `https://api.openweathermap.org/data/2.5/${endPoint}?q=${city}&appid=${apiKey}&units=metric`;
     return fetchOpenWeatherJson(apiUrl);
 }
@@ -347,7 +379,7 @@ function getWeatherIcon(id) {
     if (id >= 700 && id <= 781) return 'atmosphere.svg';
     if (id === 800) return 'clear.svg';
     if (id === 801 || id === 802) return 'clouds.svg';
-    if (id === 803 || id === 804) return 'mostly-cloudy.svg';
+    if (id === 803 || id === 804) return 'clouds.svg';
     return 'clouds.svg';
 }
 
@@ -366,6 +398,7 @@ async function updateWeatherInfo(input, isZipCode = false) {
         let weatherData;
 
         if (isZipCode) {
+            const apiKey = getActiveApiKey();
             let zipParam = input;
             if (!input.includes(',')) {
                 zipParam = `${input},US`;
@@ -460,6 +493,7 @@ async function updateForecastInfo(input, isZipCode = false) {
     let forecastsData;
 
     if (isZipCode) {
+        const apiKey = getActiveApiKey();
         let zipParam = input;
         if (!input.includes(',')) {
             zipParam = `${input},US`;
