@@ -9,43 +9,73 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     <style>
-        /* Page-specific small layout tweaks to match existing site */
+        /* Profile card styles that match Weatherly UI */
         .profile-hero {
             max-width: 900px;
             margin: 40px auto;
             padding: 24px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 18px;
-            text-align: center;
+            justify-content: center;
         }
+
+        .profile-card {
+            width: 100%;
+            max-width: 760px;
+            display: flex;
+            gap: 18px;
+            background: var(--cream, #FFF9EC);
+            border: var(--outline-width, 3px) solid var(--ink, #22223B);
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 8px 8px 0 var(--ink, #22223B);
+            align-items: center;
+        }
+
         .profile-image {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
+            width: 220px;
+            height: 220px;
+            border-radius: 12px;
             object-fit: cover;
             background: #f2f4f8;
-            display: inline-block;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            display: block;
+            border: 4px solid var(--ink, #22223B);
+            box-shadow: 6px 6px 0 rgba(0,0,0,0.08);
         }
+
+        .profile-card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-start;
+        }
+
         .profile-name {
-            font-size: 1.6rem;
+            font-size: 2rem;
             margin: 0;
+            font-weight: 900;
+            letter-spacing: 0.4px;
         }
+
         .profile-title {
             color: #6b7280;
-            margin: 6px 0 0 0;
+            margin: 6px 0 12px 0;
+            font-weight: 700;
         }
-        .profile-about {
-            margin-top: 12px;
+
+        .profile-about h4 { margin: 0 0 8px 0; font-size: 18px; }
+        .profile-about p {
+            margin: 0 0 8px 0;
             line-height: 1.6;
             color: #374151;
-            text-align: left;
+            font-size: 15px;
         }
-        @media (max-width: 640px) {
-            .profile-hero { padding: 16px; }
-            .profile-image { width: 140px; height: 140px; }
+
+        @media (max-width: 800px) {
+            .profile-card { flex-direction: column; align-items: center; padding: 18px; }
+            .profile-card-body { align-items: center; text-align: center; }
+            .profile-image { width: 160px; height: 160px; border-radius: 10px; }
+            .profile-name { font-size: 1.6rem; }
         }
     </style>
 </head>
@@ -61,30 +91,32 @@
     </nav>
 
     <main class="profile-hero">
-        <img src="assets/profile-placeholder.png" alt="Profile" class="profile-image" id="profileImage">
-        <h1 class="profile-name">Abhishek Bardhan</h1>
-        <h3 class="profile-title">Tech enthusiast • Rookie developer • 19 • TIU Kolkata '28</h3>
+        <div class="profile-card">
+            <img src="assets/profile.jpg" alt="Abhishek Bardhan" class="profile-image" id="profileImage">
+            <div class="profile-card-body">
+                <h1 class="profile-name">Abhishek Bardhan</h1>
+                <h3 class="profile-title">Tech enthusiast • Rookie developer • 19 • TIU Kolkata '28</h3>
 
-        <section class="profile-about">
-            <h4>About Me</h4>
-            <p>
-                Hi — I'm Abhishek. I'm a tech enthusiast and a rookie developer from TIU Kolkata, batch of '28.
-                I love building sleek interfaces and thoughtful motion with HTML, CSS and JavaScript. Outside of
-                coding, I enjoy playing chess, listening to music, and I always keep a Diet Coke close by while
-                sketching UI ideas. Chess sharpens my planning and pattern recognition, music fuels my late-night
-                focus sessions, and a simple soda keeps the energy up during long bug-squashing sprints.
-            </p>
-            <p>
-                This profile page is intentionally simple and responsive — the image is replaceable. When you're
-                ready, drop your real profile photo into the assets folder at <code>assets/profile.jpg</code> and
-                the page will pick it up (or use the controls in the project to set the image). The layout matches
-                the site's existing style, keeps mobile-first responsiveness, and is straightforward to edit.
-            </p>
-        </section>
+                <section class="profile-about">
+                    <h4>About Me</h4>
+                    <p>
+                        Hi — I'm Abhishek. I'm a tech enthusiast and a rookie developer from TIU Kolkata, batch of '28.
+                        I love building sleek interfaces and thoughtful motion with HTML, CSS and JavaScript. Outside of
+                        coding, I enjoy playing chess, listening to music, and I always keep a Diet Coke close by while
+                        sketching UI ideas. Chess sharpens my planning and pattern recognition, music fuels my late-night
+                        focus sessions, and a simple soda keeps the energy up during long bug-squashing sprints.
+                    </p>
+                    <p>
+                        I build small, focused projects that prioritize clarity and design. This site is kept intentionally
+                        simple to reduce bugs and make maintenance easy — if you notice anything you'd like simplified or
+                        removed, tell me and I'll pare it down further.
+                    </p>
+                </section>
+            </div>
+        </div>
     </main>
 
     <script>
-        // If user provides a profile image file later at assets/profile.jpg, switch it in automatically
         (function() {
             const img = document.getElementById('profileImage');
             const tryPath = 'assets/profile.jpg';

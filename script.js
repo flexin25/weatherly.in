@@ -18,6 +18,27 @@ const weatherSummaryImg = document.querySelector('.weather-summary-img');
 const currentDateTxt = document.querySelector('.current-date-txt');
 
 const forecastItemsContainer = document.querySelector('.forecast-items-container');
+
+// Helper to set image src with an automatic fallback if the SVG fails to load
+function setImageWithFallback(imgElem, src) {
+    if (!imgElem) return;
+    try {
+        const tester = new Image();
+        tester.onload = function() {
+            imgElem.src = src;
+        };
+        tester.onerror = function() {
+            // fallback to a safe default icon
+            imgElem.src = 'assets/weather/clouds.svg';
+        };
+        tester.src = src;
+        // also attach a safety onerror in case the element replacement later fails
+        imgElem.onerror = function() { imgElem.onerror = null; imgElem.src = 'assets/weather/clouds.svg'; };
+    } catch (e) {
+        imgElem.src = 'assets/weather/clouds.svg';
+    }
+}
+
 const tempUnitSlider = document.querySelector('.temp-unit-slider');
 const tempUnitOptions = document.querySelectorAll('.temp-unit-option');
 
@@ -374,7 +395,8 @@ async function updateWeatherInfo(input, isZipCode = false) {
         if (minMaxValueTxt) {
             minMaxValueTxt.textContent = `${convertTemperature(temp_min)}${getUnitSymbol()} / ${convertTemperature(temp_max)}${getUnitSymbol()}`;
         }
-        weatherSummaryImg.src = `assets/weather/${getWeatherIcon(id)}`;
+        setImageWithFallback(weatherSummaryImg, `assets/weather/${getWeatherIcon(id)}`);
+
 
         try {
             await updateForecastInfo(input, isZipCode);
@@ -462,7 +484,7 @@ function updateForecastItems(weatherData) {
     const forecastItem = `
         <div class="forecast-item">
             <h5 class="forecast-item-date regular-txt">${formattedDate}</h5>
-            <img src="assets/weather/${getWeatherIcon(id)}" class="forecast-item-img" alt="">
+            <img src="assets/weather/${getWeatherIcon(id)}" class="forecast-item-img" alt="" onerror="this.onerror=null;this.src='assets/weather/clouds.svg'">
             <h5 class="forecast-item-temp">${convertTemperature(temp)}${getUnitSymbol()}</h5>
         </div>`;
 
