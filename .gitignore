@@ -12,6 +12,8 @@ Thumbs.db
 # Environment variables
 .env
 .env.local
+
+# Local frontend API key file (do not commit secrets)
 config.local.js
 .vercel
 .env*

@@ -1,66 +1,43 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Share+Tech&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhai+2:wght@400..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* ================= Weatherly Theme Tokens ================= */
+:root {
+    --ink: #22223B;
+    --cream: #f0ede4;
+    --sun: #FFC93C;
+    --sky: #FFE8A3;
+    --accent: #FF6B35;
+    --outline-width: 3px;
+}
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: "Poppins", sans-serif;
-    font-weight: 600;
-    color: white;
+    color: var(--ink);
+}
+
+h1, h2, h3, h4 {
+    font-family: "Baloo Bhai 2", "Poppins", sans-serif;
 }
 
 body {
-    background: linear-gradient(-45deg, #1e3c72, #2a5298, #7e22ce, #3b82f6);
-    background-size: 400% 400%;
-    animation: gradientShift 15s ease infinite;
+    background: var(--sun);
     width: 100%;
     min-height: 100dvh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 90px 16px 30px;
 }
 
-@keyframes gradientShift {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-@keyframes gradientShift {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-body::before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100dvh;
-    background: rgba(0, 0, 0, 0.15);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    left: 0;
-    top: 0;
-}
-
-.regular-txt{
+.regular-txt {
     font-weight: 400;
 }
 
+/* ================= Navbar ================= */
 .navbar {
     position: fixed;
     top: 0;
@@ -69,108 +46,166 @@ body::before {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 18px 40px;
-    background: rgba(255, 255, 255, 0.08);
-    -webkit-backdrop-filter: blur(20px);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 16px 40px;
+    background: var(--cream);
+    border-bottom: var(--outline-width) solid var(--ink);
+    box-shadow: 0 4px 0 rgba(34, 34, 59, 0.12);
     z-index: 1000;
 }
 
 .logo {
-    font-size: 20px;
-    font-weight: 700;
-    color: white;
+    font-family: "Baloo Bhai 2", "Poppins", sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: #FFFFFF;
     text-decoration: none;
-    letter-spacing: 0.5px;
-    transition: opacity 0.3s ease;
+    background: var(--accent);
+    border: var(--outline-width) solid var(--ink);
+    border-radius: 12px;
+    padding: 6px 16px;
+    box-shadow: 3px 3px 0 var(--ink);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .logo:hover {
-    opacity: 0.8;
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0 var(--ink);
 }
 
 .nav-links {
     display: flex;
-    gap: 30px;
+    gap: 14px;
 }
 
 .nav-link {
-    color: rgba(255, 255, 255, 0.8);
+    font-family: "Baloo Bhai 2", "Poppins", sans-serif;
+    color: var(--ink);
     text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
-    transition: color 0.3s ease;
-    position: relative;
+    font-size: 17px;
+    font-weight: 700;
+    background: #FFFFFF;
+    border: var(--outline-width) solid var(--ink);
+    border-radius: 10px;
+    padding: 6px 16px;
+    box-shadow: 2px 2px 0 var(--ink);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 
-.nav-link:hover {
-    color: white;
-}
-
+.nav-link:hover,
 .nav-link.active {
-    color: white;
+    background: var(--sky);
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--ink);
 }
 
-.nav-link.active::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: white;
-}
-
-.main-container {
-    width: 300px;
-    height: auto;
-    max-height: 550px;
+/* ================= App Window ================= */
+.app-window {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
     z-index: 1;
-    padding: 20px;
-    border-radius: 20px;
-    -webkit-backdrop-filter: blur(30px);
-    backdrop-filter: blur(30px);
-    background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    transform: translateZ(0);
-    overflow: hidden;
 }
 
+/* ================= Main Card ================= */
+.main-container {
+    width: 360px;
+    height: auto;
+    max-height: none;
+    padding: 22px;
+    border-radius: 22px;
+    background: var(--cream);
+    border: var(--outline-width) solid var(--ink);
+    box-shadow: 8px 8px 0 var(--ink);
+}
+
+/* ================= Search Bar ================= */
 .input-container {
-    margin-bottom: 10px;
+    margin-bottom: 16px;
     position: relative;
 }
 
-.info-btn {
+.city-input {
+    width: 100%;
+    padding: 12px 84px 12px 16px;
+    border-radius: 14px;
+    border: var(--outline-width) solid var(--ink);
+    outline: none;
+    font-size: 15px;
+    font-weight: 500;
+    background: #FFFFFF;
+    color: var(--ink);
+    transition: box-shadow 0.15s ease;
+}
+
+.city-input:focus {
+    box-shadow: 3px 3px 0 var(--ink);
+}
+
+.city-input::placeholder {
+    color: rgba(34, 34, 59, 0.45);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.search-btn {
     position: absolute;
     right: 42px;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(100, 200, 255, 0.2);
-    border: 1px solid rgba(100, 200, 255, 0.3);
-    border-radius: 6px;
-    padding: 4px;
+    background: var(--sky);
+    border: 2px solid var(--ink);
+    border-radius: 10px;
     cursor: pointer;
-    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
     z-index: 10;
-    width: 28px;
-    height: 28px;
+    transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.search-btn:hover {
+    background: #FFE29A;
+    transform: translateY(-50%) translateY(-1px);
+}
+
+.search-btn .material-symbols-outlined {
+    font-size: 20px;
+    color: var(--ink);
+}
+
+.info-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #FFFFFF;
+    border: 2px solid var(--ink);
+    border-radius: 10px;
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    z-index: 10;
 }
 
 .info-btn:hover {
-    background: rgba(100, 200, 255, 0.3);
-    border-color: rgba(100, 200, 255, 0.5);
+    transform: translateY(-50%) translateY(-1px);
 }
 
 .info-btn .material-symbols-outlined {
     font-size: 16px;
-    color: rgba(100, 200, 255, 1);
+    color: var(--ink);
 }
 
+/* ================= Search Hint ================= */
 .search-hint {
     position: fixed;
     bottom: 20px;
@@ -180,13 +215,11 @@ body::before {
     align-items: center;
     gap: 8px;
     padding: 12px 20px;
-    background: rgba(255, 255, 255, 0.12);
-    border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
+    background: var(--cream);
+    border: var(--outline-width) solid var(--ink);
+    border-radius: 14px;
+    box-shadow: 5px 5px 0 var(--ink);
     animation: slideUp 0.3s ease;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     z-index: 100;
     max-width: 90%;
 }
@@ -204,28 +237,29 @@ body::before {
 
 .search-hint .material-symbols-outlined {
     font-size: 20px;
-    color: rgba(255, 200, 100, 0.9);
+    color: var(--accent);
 }
 
 .search-hint p {
     font-size: 13px;
     font-weight: 400;
-    color: rgba(255, 255, 255, 0.85);
+    color: var(--ink);
     margin: 0;
 }
 
 .search-hint strong {
-    color: rgba(100, 200, 255, 1);
+    color: var(--accent);
     font-weight: 600;
 }
 
+/* ================= Input Error ================= */
 .input-error-message {
     position: absolute;
-    bottom: -22px;
-    left: 16px;
+    bottom: -24px;
+    left: 14px;
     font-size: 12px;
-    color: #ff6b6b;
-    font-weight: 400;
+    color: #E63946;
+    font-weight: 500;
     display: none;
     animation: fadeIn 0.2s ease;
 }
@@ -241,147 +275,79 @@ body::before {
     }
 }
 
-
-
-.city-input {
-    width: 100%;
-    padding: 10px 16px;
-    border-radius: 99px;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    border: solid 3px transparent;
-    background: rgba(255, 255, 255, 0.15);
-    transition: border 0.3s ease;
-    color: rgb(255, 255, 255);
-    padding-right: 66px;
-}
-
-.city-input:focus {
-    border: solid 3px rgba(255, 255, 255, 0.75);
-    background: rgba(0, 0, 0, 0.25);
-}
-
-.unit-toggle-container {
-    display: none;
-    justify-content: center;
-    gap: 0;
-    margin-bottom: 12px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 99px;
-    padding: 4px;
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-}
-
-.unit-toggle-btn {
-    flex: 1;
-    padding: 8px 20px;
-    border: none;
-    background: transparent;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 99px;
-    transition: all 0.2s ease;
-    outline: none;
-}
-
-.unit-toggle-btn:hover {
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.unit-toggle-btn.active {
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.city-input::placeholder {
-    color: rgb(255, 255, 255, 0.85);
-    font-size: 15px;
-    font-weight: 400;
-}
-
-.search-btn {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    width: 28px;
-    height: 28px;
-    padding: 4px;
-}
-
-.search-btn .material-symbols-outlined {
-    font-size: 20px;
-}
-
+/* ================= Weather Info ================= */
 .weather-info {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 16px;
 }
 
-.location-date-container{
+.location-date-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 8px;
+    margin-top: 4px;
 }
-.location{
+
+.location {
     display: flex;
     align-items: center;
     gap: 4px;
 }
-.location .material-symbols-outlined{
+
+.location .material-symbols-outlined {
     font-size: 20px;
-}
-.country-txt{
-    font-size: 16px;
-    font-weight: 600;
-}
-.current-date-txt{
-    font-size: 13px;
-    opacity: 0.9;
+    color: var(--accent);
 }
 
-.weather-summary-container{
+.country-txt {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.current-date-txt {
+    font-size: 13px;
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+/* ================= Weather Summary ================= */
+.weather-summary-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 6px 0;
+    background: #d8d8d8;
+    border: var(--outline-width) solid var(--ink);
+    border-radius: 18px;
+    box-shadow: 5px 5px 0 var(--ink);
+    padding: 16px 18px;
     gap: 10px;
 }
-.weather-summary-img{
-    width: 100px;
-    height: 100px;
+
+.weather-summary-img {
+    width: 90px;
+    height: 90px;
     object-fit: contain;
 }
-.weather-summary-info{
+
+.weather-summary-info {
     text-align: right;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
 }
 
 .temp-unit-slider {
     align-self: flex-end;
     position: relative;
     display: flex;
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--sky);
+    border: 2px solid var(--ink);
     border-radius: 12px;
     padding: 3px;
-    width: 70px;
-    margin-bottom: 2px;
+    width: 74px;
+    margin-bottom: 4px;
 }
 
 .temp-slider-indicator {
@@ -390,7 +356,8 @@ body::before {
     left: 3px;
     width: calc(50% - 3px);
     height: calc(100% - 6px);
-    background: rgba(255, 255, 255, 0.3);
+    background: #FFFFFF;
+    border: 2px solid var(--ink);
     border-radius: 9px;
     transition: transform 0.3s ease;
     z-index: 0;
@@ -403,157 +370,193 @@ body::before {
 .temp-unit-option {
     flex: 1;
     padding: 4px 0;
-    font-size: 11px;
-    font-weight: 600;
+    font-size: 12px;
+    font-weight: 700;
     background: transparent;
     border: none;
     cursor: pointer;
-    transition: color 0.3s ease;
+    transition: color 0.15s ease;
     z-index: 1;
     position: relative;
 }
 
 .temp-unit-option:hover {
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--accent);
 }
 
-.temp-text{
-    font-size: 42px;
-    font-weight: 600;
+.temp-text {
+    font-size: 44px;
+    font-weight: 700;
     line-height: 1;
     white-space: nowrap;
 }
-.condition-txt{
-    font-size: 18px;
+
+.condition-txt {
+    font-size: 17px;
     font-weight: 400;
 }
+
+/* ================= Condition Items ================= */
 .weather-conditions-container {
-    display: flex;
-    gap: 8px;
-    margin: 8px 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin: 6px 0;
 }
 
-.condition-item{
-    flex: 1;
+.condition-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 6px;
-    padding: 8px 4px;
-    border-radius: 8px;
+    padding: 12px 6px;
+    background: #d8d8d8;
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
-.condition-item .material-symbols-outlined{
+
+.condition-item:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--ink);
+}
+
+.condition-item .material-symbols-outlined {
     font-size: 24px;
-    opacity: 0.9;
+    color: var(--accent);
 }
-.condition-info{
+
+.condition-info {
     display: flex;
     flex-direction: column;
     gap: 2px;
     text-align: center;
 }
-.condition-info h5:first-child{
+
+.condition-info h5:first-child {
     font-size: 10px;
-    opacity: 0.8;
+    opacity: 0.75;
     font-weight: 400;
     white-space: nowrap;
 }
-.condition-info h5:last-child{
+
+.condition-info h5:last-child {
     font-size: 13px;
     font-weight: 600;
+    white-space: nowrap;
 }
-.forecast-items-container{
+
+/* ================= Forecast ================= */
+.forecast-title-row {
+    text-align: center;
+    margin-top: 4px;
+}
+
+.forecast-title {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.forecast-items-container {
     display: flex;
     flex-wrap: nowrap;
     gap: 10px;
-    padding: 4px 0;
-    margin-top: 8px;
-    margin-bottom: 12px;
+    padding: 4px 0 8px;
     max-width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
 }
-.forecast-items-container::-webkit-scrollbar{
+
+.forecast-items-container::-webkit-scrollbar {
     height: 6px;
 }
-.forecast-items-container::-webkit-scrollbar-track{
-    background: rgba(255, 255, 255, 0.1);
+
+.forecast-items-container::-webkit-scrollbar-track {
+    background: var(--sky);
     border-radius: 10px;
 }
-.forecast-items-container::-webkit-scrollbar-thumb{
-    background: rgba(255, 255, 255, 0.3);
+
+.forecast-items-container::-webkit-scrollbar-thumb {
+    background: var(--ink);
     border-radius: 10px;
 }
-.forecast-item{
-    background: rgba(255, 255, 255, 0.15);
+
+.forecast-item {
+    background: #d8d8d8;
+    border: 2px solid var(--ink);
+    border-radius: 14px;
     padding: 12px 10px;
-    border-radius: 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    flex: 0 0 70px;
-    min-width: 70px;  
-    transition: 0.3s background;
+    flex: 0 0 76px;
+    min-width: 76px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.forecast-item:hover{
-    background: rgba(255, 255, 255, 0.25);
+.forecast-item:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--ink);
 }
 
-.forecast-item-date{
+.forecast-item-date {
     font-size: 12px;
-    font-weight: 400;
+    font-weight: 500;
     white-space: nowrap;
 }
-.forecast-item-img{
+
+.forecast-item-img {
     width: 40px;
     height: 40px;
     object-fit: contain;
 }
-.forest-item-temp{
+
+.forecast-item-temp {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 700;
 }
 
-.section-message{
+.forecast-notice {
+    font-size: 13px;
+    font-weight: 400;
+    opacity: 0.75;
+    text-align: center;
+    padding: 8px 4px;
+    width: 100%;
+}
+
+/* ================= Section Messages ================= */
+.section-message {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 15px;
+    gap: 8px;
+    padding: 30px 10px;
 }
-.section-message img{
+
+.section-message img {
     width: 120px;
     height: 120px;
     object-fit: contain;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
 
-.zip-input {
-    width: 100%;
-    padding: 10px 16px;
-    border-radius: 99px;
-    border: none;
-    outline: none;
-    font-size: 16px;
-    border: solid 3px transparent;
-    background: rgba(255, 255, 255, 0.15);
-    transition: border 0.3s ease;
-    color: rgb(255, 255, 255);
-    padding-right: 45px;
+.section-message h1 {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--ink);
 }
 
-.zip-input:focus {
-    border: solid 3px rgba(255, 255, 255, 0.75);
-    background: rgba(0, 0, 0, 0.25);
-}
-
-.zip-input::placeholder {
-    color: rgb(255, 255, 255, 0.75);
+.section-message h4 {
     font-size: 14px;
+    font-weight: 400;
+    opacity: 0.8;
+    max-width: 260px;
 }
 
+/* ================= Air Quality ================= */
 .air-quality-info {
     display: flex;
     flex-direction: column;
@@ -571,14 +574,21 @@ body::before {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 10px 8px;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 10px;
+    padding: 12px 10px;
+    background: #FFFFFF;
+    border: 2px solid var(--ink);
+    border-radius: 12px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.air-quality-item:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--ink);
 }
 
 .air-quality-item .material-symbols-outlined {
     font-size: 24px;
-    opacity: 0.9;
+    color: var(--accent);
 }
 
 .air-quality-item-info {
@@ -589,7 +599,7 @@ body::before {
 
 .air-quality-item-info h5:first-child {
     font-size: 10px;
-    opacity: 0.8;
+    opacity: 0.75;
     font-weight: 400;
 }
 
@@ -600,26 +610,26 @@ body::before {
 
 .aqi-badge {
     padding: 2px 8px;
+    border: 2px solid var(--ink);
     border-radius: 8px;
-    font-size: 11px !important;
-    color: white;
+    font-size: 12px !important;
+    color: #FFFFFF !important;
     display: inline-block;
 }
 
+/* ================= Pollutants ================= */
 .pollutants-title {
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 700;
     margin-top: 4px;
-    margin-bottom: 4px;
-    opacity: 0.9;
+    text-align: center;
 }
 
 .pollutants-container {
     display: flex;
     flex-wrap: nowrap;
     gap: 10px;
-    padding: 4px 0;
-    margin-bottom: 8px;
+    padding: 4px 0 8px;
     max-width: 100%;
     overflow-x: auto;
     overflow-y: hidden;
@@ -630,35 +640,37 @@ body::before {
 }
 
 .pollutants-container::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
+    background: var(--sky);
     border-radius: 10px;
 }
 
 .pollutants-container::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.3);
+    background: var(--ink);
     border-radius: 10px;
 }
 
 .pollutant-item {
-    background: rgba(255, 255, 255, 0.15);
+    background: #FFFFFF;
+    border: 2px solid var(--ink);
+    border-radius: 14px;
     padding: 12px 10px;
-    border-radius: 12px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 6px;
-    flex: 0 0 70px;
-    min-width: 70px;
-    transition: 0.3s background;
+    flex: 0 0 76px;
+    min-width: 76px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .pollutant-item:hover {
-    background: rgba(255, 255, 255, 0.25);
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--ink);
 }
 
 .pollutant-name {
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
     white-space: nowrap;
 }
 
@@ -669,281 +681,79 @@ body::before {
 
 .pollutant-unit {
     font-size: 9px;
+    font-weight: 400;
     opacity: 0.7;
     white-space: nowrap;
 }
-/* END AIR QUALITY PAGE STYLES */
 
-/* DASHBOARD BUTTON */
+/* ================= Dashboard Button ================= */
 .dashboard-btn {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
-    padding: 10px 16px;
-    margin-top: 16px;
-    width: 300px;
-    z-index: 1;
-    background: rgba(255, 255, 255, 0.15);
-    border: none;
-    border-radius: 15px;
+    gap: 8px;
+    padding: 12px 20px;
+    margin-top: 4px;
+    width: 100%;
+    background: var(--accent);
+    border: var(--outline-width) solid var(--ink);
+    border-radius: 16px;
+    box-shadow: 5px 5px 0 var(--ink);
     text-decoration: none;
-    font-size: 12px;
-    font-weight: 600;
+    font-family: "Baloo Bhai 2", "Poppins", sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #FFFFFF;
     cursor: pointer;
-    transition: all 0.3s ease;
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .dashboard-btn:hover {
-    background: rgba(255, 255, 255, 0.25);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 var(--ink);
 }
 
 .dashboard-btn .material-symbols-outlined {
-    font-size: 18px;
-}
-/* END DASHBOARD BUTTON */
-/* MOBILE RESPONSIVE */
-@media (max-width: 768px) {
-    .navbar {
-        padding: 15px 20px;
-    }
-
-    .logo {
-        font-size: 18px;
-    }
-
-    .nav-links {
-        gap: 15px;
-    }
-
-    .nav-link {
-        font-size: 13px;
-    }
-
-    .main-container {
-        width: 90%;
-        max-width: 350px;
-        padding: 18px;
-        max-height: none;
-    }
-
-    .city-input {
-        font-size: 15px;
-        padding: 12px 70px 12px 16px;
-    }
-
-    .info-btn {
-        right: 38px;
-        width: 26px;
-        height: 26px;
-    }
-
-    .info-btn .material-symbols-outlined {
-        font-size: 15px;
-    }
-
-    .search-btn {
-        width: 32px;
-        height: 32px;
-    }
-
-    .search-btn .material-symbols-outlined {
-        font-size: 20px;
-    }
-
-    .search-hint {
-        bottom: 15px;
-        padding: 10px 16px;
-        max-width: 85%;
-    }
-
-    .search-hint .material-symbols-outlined {
-        font-size: 18px;
-    }
-
-    .search-hint p {
-        font-size: 12px;
-    }
-
-    .city-name {
-        font-size: 20px;
-    }
-
-    .country-name {
-        font-size: 12px;
-    }
-
-    .temperature {
-        font-size: 56px;
-    }
-
-    .weather-description {
-        font-size: 14px;
-    }
-
-    .weather-icon {
-        font-size: 90px;
-    }
-
-    .forecast-title {
-        font-size: 16px;
-        margin-top: 20px;
-    }
-
-    .forecast-items {
-        gap: 8px;
-    }
-
-    .forecast-item {
-        padding: 10px 8px;
-        min-width: 70px;
-    }
-
-    .forecast-day {
-        font-size: 12px;
-    }
-
-    .forecast-icon {
-        font-size: 28px;
-    }
-
-    .forecast-temp {
-        font-size: 13px;
-    }
-
-    /* Air Quality Page Mobile */
-    .aqi-index {
-        font-size: 48px;
-    }
-
-    .aqi-status {
-        font-size: 16px;
-    }
-
-    .aqi-description {
-        font-size: 11px;
-    }
-
-    .pollutants-title {
-        font-size: 14px;
-        margin-top: 16px;
-    }
-
-    .pollutants-container {
-        gap: 8px;
-    }
-
-    .pollutant-item {
-        padding: 10px 8px;
-        flex: 0 0 65px;
-        min-width: 65px;
-    }
-
-    .pollutant-name {
-        font-size: 10px;
-    }
-
-    .pollutant-value {
-        font-size: 14px;
-    }
-
-    .pollutant-unit {
-        font-size: 8px;
-    }
-
-    .dashboard-btn {
-        width: 100%;
-        max-width: 280px;
-        padding: 10px 14px;
-        font-size: 11px;
-        margin-top: 14px;
-    }
-
-    .dashboard-btn .material-symbols-outlined {
-        font-size: 16px;
-    }
+    font-size: 20px;
+    color: #FFFFFF;
 }
 
+/* ================= Responsive ================= */
 @media (max-width: 480px) {
-    .logo {
-        font-size: 16px;
+    body {
+        padding: 84px 12px 24px;
     }
 
-    .nav-links {
-        gap: 12px;
+    .navbar {
+        padding: 12px 14px;
+    }
+
+    .logo {
+        font-size: 18px;
+        padding: 5px 12px;
     }
 
     .nav-link {
-        font-size: 12px;
+        font-size: 15px;
+        padding: 5px 12px;
     }
 
     .main-container {
-        width: 95%;
-        padding: 16px;
+        width: 100%;
+        padding: 18px;
     }
 
-    .city-input {
-        font-size: 14px;
-        padding: 11px 65px 11px 14px;
+    .weather-summary-container {
+        padding: 14px;
     }
 
-    .info-btn {
-        right: 36px;
-        width: 24px;
-        height: 24px;
-    }
-
-    .search-btn {
-        width: 30px;
-        height: 30px;
+    .temp-text {
+        font-size: 38px;
     }
 
     .search-hint {
-        bottom: 10px;
-        padding: 8px 14px;
-        max-width: 90%;
-    }
-
-    .search-hint p {
-        font-size: 11px;
-    }
-
-    .city-name {
-        font-size: 18px;
-    }
-
-    .temperature {
-        font-size: 48px;
-    }
-
-    .weather-icon {
-        font-size: 80px;
-    }
-
-    .forecast-items {
-        gap: 6px;
-    }
-
-    .forecast-item {
-        padding: 8px 6px;
-        min-width: 60px;
-    }
-
-    .forecast-icon {
-        font-size: 24px;
-    }
-
-    .aqi-index {
-        font-size: 42px;
-    }
-
-    .pollutant-item {
-        flex: 0 0 60px;
-        min-width: 60px;
+        bottom: 12px;
+        padding: 10px 14px;
     }
 }
 

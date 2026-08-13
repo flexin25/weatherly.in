@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>👤 Profile - Weatherly</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛅</text></svg>">
+    <link rel="stylesheet" href="home-style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+    <style>
+        .profile-shell {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 130px 20px 100px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-stack {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .profile-card {
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+            background: var(--cream);
+            border: var(--outline-width) solid var(--ink);
+            border-radius: 24px;
+            box-shadow: 8px 8px 0 var(--ink);
+            padding: 56px;
+            text-align: center;
+        }
+
+        .profile-photo-wrap {
+            width: 260px;
+            height: 260px;
+            margin: 0 auto 22px;
+            border-radius: 22px;
+            border: var(--outline-width) solid var(--ink);
+            box-shadow: 6px 6px 0 var(--ink);
+            overflow: hidden;
+            background: #FFFFFF;
+        }
+
+        .profile-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .profile-name {
+            font-family: "Baloo Bhai 2", "Poppins", sans-serif;
+            font-size: 54px;
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: 0.6px;
+            color: var(--ink);
+            text-shadow: 4px 4px 0 #FFFFFF;
+            margin-bottom: 10px;
+        }
+
+        .profile-headline {
+            font-size: 20px;
+            font-weight: 600;
+            opacity: 0.8;
+            margin-bottom: 38px;
+        }
+
+        .profile-about {
+            text-align: left;
+            margin-bottom: 34px;
+        }
+
+        .profile-about h2 {
+            font-family: "Baloo Bhai 2", "Poppins", sans-serif;
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 14px;
+        }
+
+        .profile-about p {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.8;
+            opacity: 0.9;
+            margin-bottom: 14px;
+        }
+
+        .profile-tags {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            margin: 0;
+        }
+
+        .profile-tags li {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 12px;
+            padding-left: 26px;
+            position: relative;
+        }
+
+        .profile-tags li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 800;
+        }
+
+        @media (max-width: 1024px) {
+            .profile-card {
+                padding: 42px 32px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .profile-card {
+                border-radius: 20px;
+                padding: 30px 20px;
+            }
+
+            .profile-photo-wrap {
+                width: 180px;
+                height: 180px;
+                border-radius: 16px;
+                margin-bottom: 18px;
+            }
+
+            .profile-name {
+                font-size: 40px;
+                text-shadow: 3px 3px 0 #FFFFFF;
+            }
+
+            .profile-headline {
+                font-size: 17px;
+                margin-bottom: 26px;
+            }
+
+            .profile-about h2 {
+                font-size: 26px;
+            }
+
+            .profile-about p,
+            .profile-tags li {
+                font-size: 15px;
+                line-height: 1.7;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">Weatherly</a>
+        <div class="nav-links">
+            <a href="weather.html" class="nav-link">Weather</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="profile.html" class="nav-link active">Profile</a>
+        </div>
+    </nav>
+
+    <div class="clouds">
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+        <div class="cloud"></div>
+    </div>
+
+    <main class="profile-shell">
+        <div class="profile-stack">
+            <section class="profile-card">
+                <div class="profile-photo-wrap">
+                    <img src="magnoos.jpg" alt="Abhishek Bardhan" class="profile-photo">
+                </div>
+
+                <h1 class="profile-name">Abhishek Bardhan</h1>
+                <p class="profile-headline">Tech enthusiast • Rookie developer • 19 • TIU Kolkata '28</p>
+
+                <div class="profile-about">
+                    <h2>About Me</h2>
+                    <p>
+                        I am Abhishek, a rookie developer who likes building clean, bold and friendly interfaces.
+                        I enjoy turning simple ideas into polished web experiences with HTML, CSS and JavaScript,
+                        and I care a lot about keeping code readable and stable.
+                    </p>
+                    <p>
+                        Outside development, chess is my reset button. It helps me think in layers and sharpen my
+                        decision making. Music keeps me focused during long work sessions, and yes, Diet Coke is
+                        my go-to while debugging or prototyping late at night.
+                    </p>
+                </div>
+
+                <ul class="profile-tags">
+                    <li>Focused on simple UI and practical features</li>
+                    <li>Loves chess, music, and thoughtful product details</li>
+                    <li>Always improving one clean release at a time</li>
+                </ul>
+            </section>
+        </div>
+    </main>
+</body>
+
+</html>

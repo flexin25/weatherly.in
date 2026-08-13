@@ -1,15 +1,21 @@
 ## For Developers Cloning This Repo:
 
-1. Copy `.env.example` to `.env`:
+1. Copy `config.local.example.js` to `config.local.js`:
    ```bash
-   copy .env.example .env
+   copy config.local.example.js config.local.js
    ```
 
 2. Get your free API key from [OpenWeatherMap](https://openweathermap.org/api)
 
-3. Edit `.env` and replace `your_api_key_here` with your actual key
+3. Edit `config.local.js` and replace `your_real_api_key_here` with your actual key:
+   ```js
+   window.__WEATHERLY_CONFIG__ = {
+       OPENWEATHER_API_KEY: "your_real_api_key"
+   };
+   ```
 
-4. The app will work immediately!
+4. `config.local.js` is gitignored, so your real key stays out of commits.
+5. The app will work immediately!
 
 ## 📍 Zip Code Format:
 
@@ -29,5 +35,5 @@ When searching by zip/postal code in Weatherly, use this format:
 
 ---
 
-**Current Status:** ✅ API key moved from public code, protected in .env file  
-**Next Step:** Consider implementing a backend server for production use
+**Current Status:** Frontend app reads key from `config.local.js` (local) via `config.js` fallback.  
+**Next Step:** For production, move API calls behind a backend so the key is never exposed to clients.
