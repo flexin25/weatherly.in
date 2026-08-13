@@ -16,7 +16,23 @@ const no2Txt = document.querySelector('.no2-txt');
 const o3Txt = document.querySelector('.o3-txt');
 const so2Txt = document.querySelector('.so2-txt');
 
-const apiKey = config.OPENWEATHER_API_KEY;
+function resolveApiKey() {
+    if (typeof config === 'undefined' || !config || typeof config.OPENWEATHER_API_KEY !== 'string') return '';
+    return config.OPENWEATHER_API_KEY.trim();
+}
+
+function hasValidApiKey(key) {
+    const normalized = key.toLowerCase();
+    const placeholders = [
+        '',
+        'your_actual_api_key',
+        'your_api_key_here',
+        'replace_with_your_openweather_api_key'
+    ];
+    return !placeholders.includes(normalized);
+}
+
+const apiKey = resolveApiKey();
 
 function updateDate() {
     const currentDate = new Date();
@@ -51,31 +67,69 @@ function getAQILevel(aqi) {
 }
 
 async function getWeatherData(lat, lon) {
-    try {
-        const response = await fetch(
-            `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
-        );
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        throw error;
+    const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
+    );
+    const data = await response.json();
+    if (!response.ok || (data?.cod !== undefined && String(data.cod) !== '200')) {
+        throw buildApiError(response.status, data);
     }
+    return data;
 }
 
 async function getAirPollutionData(lat, lon) {
-    try {
-        const response = await fetch(
-            `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`
-        );
-        const data = await response.json();
-        return data;
-    } catch (error) {
-        throw error;
+    const response = await fetch(
+        `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`
+    );
+    const data = await response.json();
+    if (!response.ok || (data?.cod !== undefined && String(data.cod) !== '200')) {
+        throw buildApiError(response.status, data);
     }
+    return data;
+}
+
+function setSectionMessage(section, title, subtitle) {
+    const titleElement = section.querySelector('h1');
+    const subtitleElement = section.querySelector('h4');
+    if (titleElement) titleElement.textContent = title;
+    if (subtitleElement) subtitleElement.textContent = subtitle;
+}
+
+function buildApiError(status, payload) {
+    const apiMessage = typeof payload?.message === 'string' ? payload.message : '';
+    const codValue = payload?.cod;
+    const cod = codValue !== undefined ? String(codValue) : '';
+    const lowered = apiMessage.toLowerCase();
+
+    if (status === 401 || cod === '401' || lowered.includes('invalid api key') || lowered.includes('unauthorized')) {
+        const authError = new Error('Invalid API key');
+        authError.kind = 'auth';
+        return authError;
+    }
+    if (status === 404 || cod === '404') {
+        const locationError = new Error('Location not found');
+        locationError.kind = 'not_found';
+        return locationError;
+    }
+    const serviceError = new Error('Air quality service unavailable');
+    serviceError.kind = 'api';
+    return serviceError;
 }
 
 async function updateAirQualityInfo(lat, lon, locationName) {
     try {
+        if (!hasValidApiKey(apiKey)) {
+            setSectionMessage(
+                searchCitySection,
+                'API Key Missing',
+                'Set your OpenWeather API key in config.local.js and reload this page'
+            );
+            searchCitySection.style.display = 'flex';
+            notFoundSection.style.display = 'none';
+            airQualityInfoSection.style.display = 'none';
+            return;
+        }
+
         const [weatherData, airPollutionData] = await Promise.all([
             getWeatherData(lat, lon),
             getAirPollutionData(lat, lon)
@@ -111,6 +165,14 @@ async function updateAirQualityInfo(lat, lon, locationName) {
         searchCitySection.style.display = 'none';
         airQualityInfoSection.style.display = 'none';
         notFoundSection.style.display = 'flex';
+
+        if (error?.kind === 'auth') {
+            setSectionMessage(notFoundSection, 'Invalid API Key', 'Please update your API key in config.local.js');
+        } else if (error?.kind === 'not_found') {
+            setSectionMessage(notFoundSection, 'Location Not Found', 'Try searching a different location from the weather page');
+        } else {
+            setSectionMessage(notFoundSection, 'Air Quality Error', 'Could not load air quality data. Please try again');
+        }
     }
 }
 

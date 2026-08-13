@@ -1,5 +1,5 @@
 const cityInput = document.querySelector('.city-input');
-const searchButton = document.querySelector('.search-btn')
+const searchButton = document.querySelector('.search-btn');
 
 const notFoundSection = document.querySelector('.not-found');
 const searchCitySection = document.querySelector('.search-city');
@@ -11,17 +11,41 @@ const descriptionTxt = document.querySelector('.condition-txt');
 const humidityTxt = document.querySelector('.humidity-value-txt');
 const pressureTxt = document.querySelector('.pressure-value-txt');
 const windValueTxt = document.querySelector('.wind-value-txt');
+const feelsLikeTxt = document.querySelector('.feels-like-value-txt');
+const visibilityValueTxt = document.querySelector('.visibility-value-txt');
+const minMaxValueTxt = document.querySelector('.minmax-value-txt');
 const weatherSummaryImg = document.querySelector('.weather-summary-img');
 const currentDateTxt = document.querySelector('.current-date-txt');
 
 const forecastItemsContainer = document.querySelector('.forecast-items-container');
-const unitToggleBtns = document.querySelectorAll('.unit-toggle-btn');
 const tempUnitSlider = document.querySelector('.temp-unit-slider');
 const tempUnitOptions = document.querySelectorAll('.temp-unit-option');
 
-const apiKey = config.OPENWEATHER_API_KEY;
+function resolveApiKey() {
+    if (typeof config === 'undefined' || !config || typeof config.OPENWEATHER_API_KEY !== 'string') return '';
+    return config.OPENWEATHER_API_KEY.trim();
+}
 
-let debounceTimer;
+function toTitleCase(text) {
+    return text
+        .split(' ')
+        .filter(Boolean)
+        .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+        .join(' ');
+}
+
+function hasValidApiKey(key) {
+    const normalized = key.toLowerCase();
+    const placeholders = [
+        '',
+        'your_actual_api_key',
+        'your_api_key_here',
+        'replace_with_your_openweather_api_key'
+    ];
+    return !placeholders.includes(normalized);
+}
+
+const apiKey = resolveApiKey();
 
 const infoBtn = document.querySelector('.info-btn');
 const searchHint = document.querySelector('.search-hint');
@@ -31,7 +55,7 @@ if (infoBtn && searchHint) {
     infoBtn.addEventListener('mouseenter', () => {
         searchHint.style.display = 'flex';
     });
-    
+
     // Hide hint when mouse leaves both button and hint
     infoBtn.addEventListener('mouseleave', () => {
         setTimeout(() => {
@@ -40,31 +64,19 @@ if (infoBtn && searchHint) {
             }
         }, 100);
     });
-    
+
     searchHint.addEventListener('mouseleave', () => {
         searchHint.style.display = 'none';
     });
 }
-
-
 
 let currentUnit = localStorage.getItem('temperatureUnit') || 'celsius';
 let currentWeatherData = null;
 let currentLocationData = null;
 
 window.addEventListener('DOMContentLoaded', () => {
-    unitToggleBtns.forEach(btn => {
-        if (btn.dataset.unit === currentUnit) {
-            btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
-        }
-    });
-    
-    if (tempUnitSlider) {
-        if (currentUnit === 'fahrenheit') {
-            tempUnitSlider.classList.add('fahrenheit');
-        }
+    if (tempUnitSlider && currentUnit === 'fahrenheit') {
+        tempUnitSlider.classList.add('fahrenheit');
     }
 });
 
@@ -73,10 +85,10 @@ if (tempUnitOptions) {
         option.addEventListener('click', () => {
             const newUnit = option.dataset.unit;
             if (newUnit === currentUnit) return;
-            
+
             currentUnit = newUnit;
             localStorage.setItem('temperatureUnit', currentUnit);
-            
+
             if (tempUnitSlider) {
                 if (currentUnit === 'fahrenheit') {
                     tempUnitSlider.classList.add('fahrenheit');
@@ -84,15 +96,7 @@ if (tempUnitOptions) {
                     tempUnitSlider.classList.remove('fahrenheit');
                 }
             }
-            
-            unitToggleBtns.forEach(btn => {
-                if (btn.dataset.unit === currentUnit) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
-            
+
             if (currentWeatherData) {
                 updateTemperatureDisplay();
             }
@@ -100,25 +104,8 @@ if (tempUnitOptions) {
     });
 }
 
-unitToggleBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        const newUnit = btn.dataset.unit;
-        if (newUnit === currentUnit) return;
-        
-        currentUnit = newUnit;
-        localStorage.setItem('temperatureUnit', currentUnit);
-        
-        unitToggleBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        
-        if (currentWeatherData) {
-            updateTemperatureDisplay();
-        }
-    });
-});
-
 function celsiusToFahrenheit(celsius) {
-    return (celsius * 9/5) + 32;
+    return (celsius * 9 / 5) + 32;
 }
 
 function convertTemperature(temp) {
@@ -134,10 +121,19 @@ function getUnitSymbol() {
 
 function updateTemperatureDisplay() {
     if (!currentWeatherData) return;
-    
+
     const mainTemp = currentWeatherData.main.temp;
     temperatureTxt.textContent = `${convertTemperature(mainTemp)}${getUnitSymbol()}`;
-    
+    if (feelsLikeTxt) {
+        feelsLikeTxt.textContent = `${convertTemperature(currentWeatherData.main.feels_like)}${getUnitSymbol()}`;
+    }
+    if (minMaxValueTxt) {
+        minMaxValueTxt.textContent = `${convertTemperature(currentWeatherData.main.temp_min)}${getUnitSymbol()} / ${convertTemperature(currentWeatherData.main.temp_max)}${getUnitSymbol()}`;
+    }
+    if (visibilityValueTxt) {
+        visibilityValueTxt.textContent = `${(currentWeatherData.visibility / 1000).toFixed(1)} km`;
+    }
+
     const forecastItems = document.querySelectorAll('.forecast-item-temp');
     currentWeatherData.forecastTemps.forEach((temp, index) => {
         if (forecastItems[index]) {
@@ -148,28 +144,28 @@ function updateTemperatureDisplay() {
 
 function validateCityInput(input) {
     input = input.trim();
-    
+
     if (input === '') {
         return { valid: false, message: 'Please enter a city name or zip code' };
     }
-    
+
     if (input.length < 2) {
         return { valid: false, message: 'Input is too short' };
     }
     if (input.length > 50) {
         return { valid: false, message: 'Input is too long' };
     }
-    
+
     const zipWithCountryPattern = /^\d{3,10},[A-Z]{2}$/i;
     const zipOnlyPattern = /^\d{5,10}$/;
-    const cityPattern = /^[a-zA-Z\s\-'\.]+$/;
-    
+    const cityPattern = /^[a-zA-Z\s\-'\.]+(?:,[a-zA-Z]{2})?$/;
+
     const isZipCode = zipWithCountryPattern.test(input) || zipOnlyPattern.test(input);
-    
+
     if (!isZipCode && !cityPattern.test(input)) {
         return { valid: false, message: 'Please enter a valid city name or zip code' };
     }
-    
+
     return { valid: true, message: '', isZipCode: isZipCode };
 }
 
@@ -183,16 +179,98 @@ function showInputError(message) {
     }
     errorElement.textContent = message;
     errorElement.style.display = 'block';
-    
+
     setTimeout(() => {
         errorElement.style.display = 'none';
     }, 3000);
+}
+
+function setSectionMessage(section, title, subtitle) {
+    const titleElement = section.querySelector('h1');
+    const subtitleElement = section.querySelector('h4');
+    if (titleElement) titleElement.textContent = title;
+    if (subtitleElement) subtitleElement.textContent = subtitle;
+}
+
+function showApiSetupError() {
+    setSectionMessage(
+        notFoundSection,
+        'API Key Missing',
+        'Set your OpenWeather API key in config.local.js and reload this page'
+    );
+    showDisplaySection(notFoundSection);
+}
+
+function showForecastNotice(message) {
+    if (!forecastItemsContainer) return;
+    forecastItemsContainer.innerHTML = `<p class="forecast-notice">${message}</p>`;
+}
+
+function normalizeApiError(status, payload) {
+    const message = typeof payload?.message === 'string' ? payload.message : '';
+    const codValue = payload?.cod;
+    const cod = codValue !== undefined ? String(codValue) : '';
+    const lowered = message.toLowerCase();
+
+    if (status === 401 || cod === '401' || lowered.includes('invalid api key') || lowered.includes('unauthorized')) {
+        return {
+            type: 'auth',
+            title: 'Invalid API Key',
+            message: 'Your OpenWeather API key is invalid or inactive'
+        };
+    }
+    if (status === 404 || cod === '404') {
+        return {
+            type: 'not_found',
+            title: 'Location Not Found',
+            message: 'Please enter a valid city or zip code'
+        };
+    }
+    return {
+        type: 'api',
+        title: 'Weather Service Error',
+        message: 'Could not load weather data right now. Please try again'
+    };
+}
+
+async function fetchOpenWeatherJson(apiUrl) {
+    let response;
+    try {
+        response = await fetch(apiUrl);
+    } catch (error) {
+        const networkError = new Error('Network request failed');
+        networkError.kind = 'network';
+        throw networkError;
+    }
+
+    let payload;
+    try {
+        payload = await response.json();
+    } catch (error) {
+        const parseError = new Error('Invalid API response');
+        parseError.kind = 'parse';
+        throw parseError;
+    }
+
+    if (!response.ok || (payload?.cod !== undefined && String(payload.cod) !== '200')) {
+        const apiErrorInfo = normalizeApiError(response.status, payload);
+        const apiError = new Error(apiErrorInfo.message);
+        apiError.kind = apiErrorInfo.type;
+        apiError.title = apiErrorInfo.title;
+        throw apiError;
+    }
+
+    return payload;
 }
 
 searchButton.addEventListener('click', () => {
     const validation = validateCityInput(cityInput.value);
     if (!validation.valid) {
         showInputError(validation.message);
+        return;
+    }
+    if (!hasValidApiKey(apiKey)) {
+        showApiSetupError();
         return;
     }
     updateWeatherInfo(cityInput.value.trim(), validation.isZipCode);
@@ -207,6 +285,10 @@ cityInput.addEventListener('keydown', (event) => {
             showInputError(validation.message);
             return;
         }
+        if (!hasValidApiKey(apiKey)) {
+            showApiSetupError();
+            return;
+        }
         updateWeatherInfo(cityInput.value.trim(), validation.isZipCode);
         cityInput.value = '';
         cityInput.blur();
@@ -215,16 +297,14 @@ cityInput.addEventListener('keydown', (event) => {
 
 async function getFetchData(endPoint, city) {
     const apiUrl = `https://api.openweathermap.org/data/2.5/${endPoint}?q=${city}&appid=${apiKey}&units=metric`;
-    const response = await fetch(apiUrl)
-    return response.json();
+    return fetchOpenWeatherJson(apiUrl);
 }
 
 function getWeatherIcon(id) {
     if (id >= 200 && id <= 232) return 'thunderstorm.svg';
     if (id >= 300 && id <= 321) return 'drizzle.svg';
     if (id >= 500 && id <= 531) return 'rain.svg';
-    if (id === 600) return 'snow.svg';
-    if (id >= 601 && id <= 622) return 'snow.svg';
+    if (id >= 600 && id <= 622) return 'snow.svg';
     if (id >= 700 && id <= 781) return 'atmosphere.svg';
     if (id === 800) return 'clear.svg';
     if (id === 801 || id === 802) return 'clouds.svg';
@@ -243,81 +323,112 @@ function getCurrentDate() {
 }
 
 async function updateWeatherInfo(input, isZipCode = false) {
-    let weatherData;
-    
-    if (isZipCode) {
-        let zipParam = input;
-        if (!input.includes(',')) {
-            zipParam = `${input},US`;
+    try {
+        let weatherData;
+
+        if (isZipCode) {
+            let zipParam = input;
+            if (!input.includes(',')) {
+                zipParam = `${input},US`;
+            }
+            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zipParam}&appid=${apiKey}&units=metric`;
+            weatherData = await fetchOpenWeatherJson(apiUrl);
+        } else {
+            weatherData = await getFetchData('weather', input);
         }
-        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zipParam}&appid=${apiKey}&units=metric`;
-        const response = await fetch(apiUrl);
-        weatherData = await response.json();
-    } else {
-        weatherData = await getFetchData('weather', input);
-    }
-    
-    if (weatherData.cod != 200) {
+
+        const {
+            name: cityName,
+            main: { temp, feels_like, temp_min, temp_max, humidity, pressure },
+            weather: [{ id, description }],
+            wind: { speed },
+            visibility,
+            sys: { country: countryCode },
+            coord: { lat, lon }
+        } = weatherData;
+
+        currentWeatherData = {
+            main: { temp, feels_like, temp_min, temp_max },
+            visibility,
+            forecastTemps: []
+        };
+
+        currentLocationData = {
+            lat: lat,
+            lon: lon,
+            name: `${cityName}, ${countryCode}`
+        };
+
+        countryTxt.textContent = `${cityName}, ${countryCode}`;
+        temperatureTxt.textContent = `${convertTemperature(temp)}${getUnitSymbol()}`;
+        descriptionTxt.textContent = toTitleCase(description);
+        humidityTxt.textContent = `${humidity}%`;
+        pressureTxt.textContent = `${pressure} hPa`;
+        windValueTxt.textContent = `${speed.toFixed(1)} M/s`;
+        if (feelsLikeTxt) {
+            feelsLikeTxt.textContent = `${convertTemperature(feels_like)}${getUnitSymbol()}`;
+        }
+        if (visibilityValueTxt) {
+            visibilityValueTxt.textContent = `${(visibility / 1000).toFixed(1)} km`;
+        }
+        if (minMaxValueTxt) {
+            minMaxValueTxt.textContent = `${convertTemperature(temp_min)}${getUnitSymbol()} / ${convertTemperature(temp_max)}${getUnitSymbol()}`;
+        }
+        weatherSummaryImg.src = `assets/weather/${getWeatherIcon(id)}`;
+
+        try {
+            await updateForecastInfo(input, isZipCode);
+        } catch (error) {
+            showForecastNotice('Forecast unavailable right now, current weather is still shown');
+        }
+
+        if (currentDateTxt) {
+            currentDateTxt.textContent = getCurrentDate();
+        }
+
+        const dashboardBtn = document.getElementById('dashboardBtn');
+        if (dashboardBtn && currentLocationData) {
+            dashboardBtn.href = `airquality.html?lat=${currentLocationData.lat}&lon=${currentLocationData.lon}&name=${encodeURIComponent(currentLocationData.name)}`;
+            dashboardBtn.style.display = 'flex';
+        }
+
+        showDisplaySection(weatherInfoSection);
+    } catch (error) {
+        const isAuthError = error?.kind === 'auth';
+        const isNotFoundError = error?.kind === 'not_found';
+        const isNetworkError = error?.kind === 'network';
+
+        if (isAuthError) {
+            setSectionMessage(notFoundSection, 'Invalid API Key', 'Please update your API key in config.local.js');
+        } else if (isNotFoundError) {
+            setSectionMessage(notFoundSection, 'Location Not Found', 'Please search with a valid city or zip,country');
+        } else if (isNetworkError) {
+            setSectionMessage(notFoundSection, 'Network Error', 'Unable to reach OpenWeather. Check your connection and retry');
+        } else {
+            setSectionMessage(notFoundSection, 'Weather Error', 'Unable to load weather report. Please try again');
+        }
         showDisplaySection(notFoundSection);
-        return;
     }
-    console.log(weatherData);
-
-    const {
-        name: country,
-        main: { temp, humidity, pressure },
-        weather: [{ id, main }],
-        wind: { speed },
-        coord: { lat, lon }
-    } = weatherData;
-
-    currentWeatherData = {
-        main: { temp },
-        forecastTemps: []
-    };
-    
-    currentLocationData = {
-        lat: lat,
-        lon: lon,
-        name: country
-    };
-
-    countryTxt.textContent = country;
-    temperatureTxt.textContent = `${convertTemperature(temp)}${getUnitSymbol()}`;
-    descriptionTxt.textContent = main;
-    humidityTxt.textContent = `${humidity}%`;
-    pressureTxt.textContent = `${pressure} hPa`;
-    windValueTxt.textContent = `${speed.toFixed(1)} M/s`;
-    weatherSummaryImg.src = `assets/weather/${getWeatherIcon(id)}`;
-
-    await updateForecastInfo(input, isZipCode);
-
-    currentDateTxt.textContent = getCurrentDate();
-    
-    const dashboardBtn = document.getElementById('dashboardBtn');
-    if (dashboardBtn && currentLocationData) {
-        dashboardBtn.href = `airquality.html?lat=${currentLocationData.lat}&lon=${currentLocationData.lon}&name=${encodeURIComponent(currentLocationData.name)}`;
-        dashboardBtn.style.display = 'flex';
-    }
-
-    showDisplaySection(weatherInfoSection);
 }
 
 async function updateForecastInfo(input, isZipCode = false) {
     let forecastsData;
-    
+
     if (isZipCode) {
         let zipParam = input;
         if (!input.includes(',')) {
             zipParam = `${input},US`;
         }
         const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?zip=${zipParam}&appid=${apiKey}&units=metric`;
-        const response = await fetch(apiUrl);
-        forecastsData = await response.json();
+        forecastsData = await fetchOpenWeatherJson(apiUrl);
     } else {
         forecastsData = await getFetchData('forecast', input);
     }
-    if (!forecastsData || !forecastsData.list) return;
+    if (!forecastsData || !forecastsData.list) {
+        const forecastDataError = new Error('Forecast data missing');
+        forecastDataError.kind = 'api';
+        throw forecastDataError;
+    }
 
     const timeTaken = '12:00:00';
     const todayDate = new Date().toISOString().split('T')[0];
@@ -328,6 +439,11 @@ async function updateForecastInfo(input, isZipCode = false) {
     const filtered = forecastsData.list.filter(forecast => {
         return forecast.dt_txt.includes(timeTaken) && !forecast.dt_txt.includes(todayDate);
     });
+
+    if (filtered.length === 0) {
+        showForecastNotice('No forecast data available for the next days');
+        return;
+    }
 
     filtered.forEach(forecast => {
         currentWeatherData.forecastTemps.push(forecast.main.temp);
@@ -362,4 +478,3 @@ function showDisplaySection(section) {
     [weatherInfoSection, notFoundSection, searchCitySection].forEach(section => section.style.display = 'none');
     section.style.display = 'flex';
 }
-

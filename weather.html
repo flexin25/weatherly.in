@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>⛅ Weatherly</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22></text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛅</text></svg>">
     <link rel="stylesheet" href="style.css">
+    <script src="config.local.js"></script>
     <script src="config.js"></script>
     <script src="script.js" defer></script>
 
@@ -14,122 +15,126 @@
 </head>
 
 <body>
-    <main class="main-container">
+    <!-- Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">Weatherly</a>
+        <div class="nav-links">
+            <a href="weather.html" class="nav-link active">Weather</a>
+            <a href="about.html" class="nav-link">About</a>
+        </div>
+    </nav>
 
-        <header class="input-container">
-            <input class="city-input" placeholder="Search city or zip code" type="text" autocomplete="off">
-            <button class="search-btn">
-                <span class="material-symbols-outlined">search</span>
-            </button>
-            <button class="info-btn" title="Zip code format help">
-                <span class="material-symbols-outlined">info</span>
-            </button>
-        </header>
+    <div class="app-window">
+        <main class="main-container">
 
-        <section class="weather-info" style="display: none;">
-            <div class="location-date-container">
-                <div class="location">
-                    <span class="material-symbols-outlined">location_on</span>
-                    <h4 class="country-txt">Kolkata</h4>
-                </div>
-                <h5 class="current-date-txt regular-txt">Thu, 20 Nov</h5>
-            </div>
-            <div class="weather-summary-container">
-                <img src="assets/weather/clouds.svg" alt="current weather" class="weather-summary-img">
-                <div class="weather-summary-info">
-                    <div class="temp-unit-slider">
-                        <div class="temp-slider-indicator"></div>
-                        <button class="temp-unit-option" data-unit="celsius">°C</button>
-                        <button class="temp-unit-option" data-unit="fahrenheit">°F</button>
+            <header class="input-container">
+                <input class="city-input" placeholder="Search city or zip code" type="text" autocomplete="off">
+                <button class="search-btn" aria-label="Search">
+                    <span class="material-symbols-outlined">search</span>
+                </button>
+                <button class="info-btn" title="Zip code format help" aria-label="Search help">
+                    <span class="material-symbols-outlined">info</span>
+                </button>
+            </header>
+
+            <section class="weather-info" style="display: none;">
+                <div class="location-date-container">
+                    <div class="location">
+                        <span class="material-symbols-outlined">location_on</span>
+                        <h4 class="country-txt">Kolkata</h4>
                     </div>
-                    <h1 class="temp-text">25 °C</h1>
-                    <h3 class="condition-txt regular-txt"> Cloudy </h3>
+                    <h5 class="current-date-txt regular-txt">Thu, 20 Nov</h5>
                 </div>
-            </div>
-            <div class="weather-conditions-container">
-                <div class="condition-item">
-                    <span class="material-symbols-outlined">
-                        water_drop
-                    </span>
-                    <div class="condition-info">
-                        <h5 class="regular-txt">Humidity</h5>
-                        <h5 class="humidity-value-txt">55%</h5>
-                    </div>
-                </div>
-
-                <div class="condition-item">
-                    <span class="material-symbols-outlined">
-                        speed
-                    </span>
-                    <div class="condition-info">
-                        <h5 class="regular-txt">Pressure</h5>
-                        <h5 class="pressure-value-txt">1013 hPa</h5>
+                <div class="weather-summary-container">
+                    <img src="assets/weather/clouds.svg" alt="current weather" class="weather-summary-img">
+                    <div class="weather-summary-info">
+                        <div class="temp-unit-slider">
+                            <div class="temp-slider-indicator"></div>
+                            <button class="temp-unit-option" data-unit="celsius">°C</button>
+                            <button class="temp-unit-option" data-unit="fahrenheit">°F</button>
+                        </div>
+                        <h1 class="temp-text">25 °C</h1>
+                        <h3 class="condition-txt regular-txt">Cloudy</h3>
                     </div>
                 </div>
+                <div class="weather-conditions-container">
+                    <div class="condition-item">
+                        <span class="material-symbols-outlined">water_drop</span>
+                        <div class="condition-info">
+                            <h5 class="regular-txt">Humidity</h5>
+                            <h5 class="humidity-value-txt">55%</h5>
+                        </div>
+                    </div>
 
-                <div class="condition-item">
-                    <span class="material-symbols-outlined">
-                        air
-                    </span>
-                    <div class="condition-info">
-                        <h5 class="regular-txt">Wind Speed</h5>
-                        <h5 class="wind-value-txt">2 M/s</h5>
+                    <div class="condition-item">
+                        <span class="material-symbols-outlined">speed</span>
+                        <div class="condition-info">
+                            <h5 class="regular-txt">Pressure</h5>
+                            <h5 class="pressure-value-txt">1013 hPa</h5>
+                        </div>
+                    </div>
+
+                    <div class="condition-item">
+                        <span class="material-symbols-outlined">air</span>
+                        <div class="condition-info">
+                            <h5 class="regular-txt">Wind Speed</h5>
+                            <h5 class="wind-value-txt">2 M/s</h5>
+                        </div>
+                    </div>
+
+                    <div class="condition-item">
+                        <span class="material-symbols-outlined">device_thermostat</span>
+                        <div class="condition-info">
+                            <h5 class="regular-txt">Feels Like</h5>
+                            <h5 class="feels-like-value-txt">24°C</h5>
+                        </div>
+                    </div>
+
+                    <div class="condition-item">
+                        <span class="material-symbols-outlined">visibility</span>
+                        <div class="condition-info">
+                            <h5 class="regular-txt">Visibility</h5>
+                            <h5 class="visibility-value-txt">10.0 km</h5>
+                        </div>
+                    </div>
+
+                    <div class="condition-item">
+                        <span class="material-symbols-outlined">thermostat</span>
+                        <div class="condition-info">
+                            <h5 class="regular-txt">Min / Max</h5>
+                            <h5 class="minmax-value-txt">22°C / 29°C</h5>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="forecast-items-container">
-                <div class="forecast-item">
-                    <h5 class="forecast-item-date regular-txt">22 Nov</h5>
-                    <img src="assets/weather/thunderstorm.svg" class="forecast-item-img">
-                    <h5 class="forest-item-temp">29°C</h5>
+                <div class="forecast-title-row">
+                    <h4 class="forecast-title">5-Day Forecast</h4>
                 </div>
-                  <div class="forecast-item">
-                    <h5 class="forecast-item-date regular-txt">22 Nov</h5>
-                    <img src="assets/weather/thunderstorm.svg" class="forecast-item-img">
-                    <h5 class="forest-item-temp">29°C</h5>
-                </div>
-                  <div class="forecast-item">
-                    <h5 class="forecast-item-date regular-txt">22 Nov</h5>
-                    <img src="assets/weather/thunderstorm.svg" class="forecast-item-img">
-                    <h5 class="forest-item-temp">29°C</h5>
-                </div>
-                  <div class="forecast-item">
-                    <h5 class="forecast-item-date regular-txt">22 Nov</h5>
-                    <img src="assets/weather/thunderstorm.svg" class="forecast-item-img">
-                    <h5 class="forest-item-temp">29°C</h5>
-                </div>
-            </div>
-        </section>
-        <section class="search-city section-message">
-            <img src="assets/message/search-city.png" alt="search" class="">
-             <div>
+                <div class="forecast-items-container"></div>
+            </section>
+
+            <section class="search-city section-message">
+                <img src="assets/message/search-city.png" alt="search">
                 <h1>Search City</h1>
-                <h4 class="regular-txt">
-                    Find out the weather conditions in your city !
-                </h4>
-             </div>
-        </section>
+                <h4 class="regular-txt">Find out the weather conditions in your city!</h4>
+            </section>
 
-         <section class="not-found section-message" style="display: none;">
-            <img src="assets/message/not-found.png" alt="search" class="">
-             <div>
-                <h1>Error 404 Gang!</h1>
-                <h4 class="regular-txt">
-                    City not Found Dawg !!
-                </h4>
-             </div>
-        </section>
-    </main>
-    
+            <section class="not-found section-message" style="display: none;">
+                <img src="assets/message/not-found.png" alt="not found">
+                <h1>Location Not Found</h1>
+                <h4 class="regular-txt">Please search with a valid city or zip code</h4>
+            </section>
+        </main>
+
+        <a href="#" class="dashboard-btn" id="dashboardBtn" style="display: none;">
+            <span class="material-symbols-outlined">air</span>
+            <span>View Air Quality & Pollution Data</span>
+        </a>
+    </div>
+
     <div class="search-hint" style="display: none;">
         <span class="material-symbols-outlined">lightbulb</span>
         <p>Tip: For zip code search, use format: <strong>pincode,country</strong> (e.g., 700001,IN or 10001,US)</p>
     </div>
-    
-    <a href="#" class="dashboard-btn" id="dashboardBtn" style="display: none;">
-        <span class="material-symbols-outlined">air</span>
-        <span>View Air Quality & Pollution Data</span>
-    </a>
 </body>
 
 </html>
