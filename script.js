@@ -395,12 +395,11 @@ async function updateWeatherInfo(input, isZipCode = false) {
         let weatherData;
 
         if (isZipCode) {
-            const apiKey = getActiveApiKey();
             let zipParam = input;
             if (!input.includes(',')) {
                 zipParam = `${input},US`;
             }
-            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zipParam}&appid=${apiKey}&units=metric`;
+            const apiUrl = `${API_BASE}?endpoint=weather&zip=${encodeURIComponent(zipParam)}&units=metric`;
             weatherData = await fetchOpenWeatherJson(apiUrl);
         } else {
             weatherData = await getFetchData('weather', input);
