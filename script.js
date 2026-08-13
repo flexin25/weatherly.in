@@ -19,23 +19,41 @@ const currentDateTxt = document.querySelector('.current-date-txt');
 
 const forecastItemsContainer = document.querySelector('.forecast-items-container');
 
-// Helper to set image src with an automatic fallback if the SVG fails to load
-function setImageWithFallback(imgElem, src) {
+function buildInlineWeatherFallback(iconName) {
+    const emojiByIcon = {
+        'thunderstorm.svg': '⛈️',
+        'drizzle.svg': '🌦️',
+        'rain.svg': '🌧️',
+        'snow.svg': '❄️',
+        'atmosphere.svg': '🌫️',
+        'clear.svg': '☀️',
+        'clouds.svg': '☁️',
+        'mostly-cloudy.svg': '🌥️'
+    };
+    const symbol = emojiByIcon[iconName] || '☁️';
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96"><rect width="96" height="96" rx="18" fill="#FFF9EC" stroke="#22223B" stroke-width="4"/><text x="48" y="58" text-anchor="middle" font-size="40">${symbol}</text></svg>`;
+    return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+}
+
+// Helper to set image src with an automatic fallback
+function setImageWithFallback(imgElem, src, fallbackSrc) {
     if (!imgElem) return;
+    const resolvedFallback = fallbackSrc || buildInlineWeatherFallback('clouds.svg');
     try {
         const tester = new Image();
         tester.onload = function() {
             imgElem.src = src;
         };
         tester.onerror = function() {
-            // fallback to a safe default icon
-            imgElem.src = 'assets/weather/clouds.svg';
+            imgElem.src = resolvedFallback;
         };
         tester.src = src;
-        // also attach a safety onerror in case the element replacement later fails
-        imgElem.onerror = function() { imgElem.onerror = null; imgElem.src = 'assets/weather/clouds.svg'; };
+        imgElem.onerror = function() {
+            imgElem.onerror = null;
+            imgElem.src = resolvedFallback;
+        };
     } catch (e) {
-        imgElem.src = 'assets/weather/clouds.svg';
+        imgElem.src = resolvedFallback;
     }
 }
 
@@ -395,7 +413,12 @@ async function updateWeatherInfo(input, isZipCode = false) {
         if (minMaxValueTxt) {
             minMaxValueTxt.textContent = `${convertTemperature(temp_min)}${getUnitSymbol()} / ${convertTemperature(temp_max)}${getUnitSymbol()}`;
         }
-        setImageWithFallback(weatherSummaryImg, `assets/weather/${getWeatherIcon(id)}`);
+        const iconName = getWeatherIcon(id);
+        setImageWithFallback(
+            weatherSummaryImg,
+            `assets/weather/${iconName}`,
+            buildInlineWeatherFallback(iconName)
+        );
 
 
         try {
@@ -480,11 +503,13 @@ function updateForecastItems(weatherData) {
         main: { temp },
     } = weatherData;
 
+    const iconName = getWeatherIcon(id);
+    const fallbackIconSrc = buildInlineWeatherFallback(iconName);
     const formattedDate = formatDate(date);
     const forecastItem = `
         <div class="forecast-item">
             <h5 class="forecast-item-date regular-txt">${formattedDate}</h5>
-            <img src="assets/weather/${getWeatherIcon(id)}" class="forecast-item-img" alt="" onerror="this.onerror=null;this.src='assets/weather/clouds.svg'">
+            <img src="assets/weather/${iconName}" class="forecast-item-img" alt="" onerror="this.onerror=null;this.src='${fallbackIconSrc}'">
             <h5 class="forecast-item-temp">${convertTemperature(temp)}${getUnitSymbol()}</h5>
         </div>`;
 
