@@ -357,10 +357,12 @@ cityInput.addEventListener('keydown', (event) => {
             showInputError(validation.message);
             return;
         }
-        if (!hasValidApiKey(getActiveApiKey())) {
-            showApiSetupError();
-            return;
-        }
+       const activeApiKey = getActiveApiKey();
+
+if (!activeApiKey) {
+    showApiSetupError();
+    return;
+}
         updateWeatherInfo(cityInput.value.trim(), validation.isZipCode);
         cityInput.value = '';
         cityInput.blur();
