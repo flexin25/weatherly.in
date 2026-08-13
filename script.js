@@ -336,10 +336,6 @@ searchButton.addEventListener('click', () => {
         showInputError(validation.message);
         return;
     }
-    if (!hasValidApiKey(getActiveApiKey())) {
-        showApiSetupError();
-        return;
-    }
     updateWeatherInfo(cityInput.value.trim(), validation.isZipCode);
     cityInput.value = '';
     cityInput.blur();
@@ -350,10 +346,6 @@ cityInput.addEventListener('keydown', (event) => {
         const validation = validateCityInput(cityInput.value);
         if (!validation.valid) {
             showInputError(validation.message);
-            return;
-        }
-        if (!hasValidApiKey(getActiveApiKey())) {
-            showApiSetupError();
             return;
         }
         updateWeatherInfo(cityInput.value.trim(), validation.isZipCode);
