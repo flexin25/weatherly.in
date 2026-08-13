@@ -19,7 +19,7 @@ const unitToggleBtns = document.querySelectorAll('.unit-toggle-btn');
 const tempUnitSlider = document.querySelector('.temp-unit-slider');
 const tempUnitOptions = document.querySelectorAll('.temp-unit-option');
 
-const apiKey = config.OPENWEATHER_API_KEY;
+const API_BASE = config.API_BASE;
 
 let debounceTimer;
 
@@ -214,8 +214,8 @@ cityInput.addEventListener('keydown', (event) => {
 });
 
 async function getFetchData(endPoint, city) {
-    const apiUrl = `https://api.openweathermap.org/data/2.5/${endPoint}?q=${city}&appid=${apiKey}&units=metric`;
-    const response = await fetch(apiUrl)
+    const apiUrl = `${API_BASE}?endpoint=${endPoint}&q=${encodeURIComponent(city)}&units=metric`;
+    const response = await fetch(apiUrl);
     return response.json();
 }
 
@@ -250,7 +250,7 @@ async function updateWeatherInfo(input, isZipCode = false) {
         if (!input.includes(',')) {
             zipParam = `${input},US`;
         }
-        const apiUrl = `https://api.openweathermap.org/data/2.5/weather?zip=${zipParam}&appid=${apiKey}&units=metric`;
+        const apiUrl = `${API_BASE}?endpoint=weather&zip=${encodeURIComponent(zipParam)}&units=metric`;
         const response = await fetch(apiUrl);
         weatherData = await response.json();
     } else {
@@ -311,7 +311,7 @@ async function updateForecastInfo(input, isZipCode = false) {
         if (!input.includes(',')) {
             zipParam = `${input},US`;
         }
-        const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?zip=${zipParam}&appid=${apiKey}&units=metric`;
+        const apiUrl = `${API_BASE}?endpoint=forecast&zip=${encodeURIComponent(zipParam)}&units=metric`;
         const response = await fetch(apiUrl);
         forecastsData = await response.json();
     } else {

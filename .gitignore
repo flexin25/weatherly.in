@@ -13,3 +13,5 @@ Thumbs.db
 .env
 .env.local
 config.local.js
+.vercel
+.env*

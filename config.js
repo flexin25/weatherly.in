@@ -1,9 +1,9 @@
+// API key is never exposed here — all requests go through /api/weather proxy
 const config = {
-    OPENWEATHER_API_KEY:
-        (typeof globalThis !== 'undefined' && globalThis.OPENWEATHER_API_KEY) ||
-        (typeof process !== 'undefined' && process.env && process.env.OPENWEATHER_API_KEY) ||
-        ''
+    // Base URL for all weather API calls (Vercel serverless proxy)
+    API_BASE: '/api/weather'
 };
+
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = config;
 }

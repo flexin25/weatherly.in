@@ -16,7 +16,7 @@ const no2Txt = document.querySelector('.no2-txt');
 const o3Txt = document.querySelector('.o3-txt');
 const so2Txt = document.querySelector('.so2-txt');
 
-const apiKey = config.OPENWEATHER_API_KEY;
+const API_BASE = config.API_BASE;
 
 function updateDate() {
     const currentDate = new Date();
@@ -53,7 +53,7 @@ function getAQILevel(aqi) {
 async function getWeatherData(lat, lon) {
     try {
         const response = await fetch(
-            `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
+            `${API_BASE}?endpoint=weather&lat=${lat}&lon=${lon}&units=metric`
         );
         const data = await response.json();
         return data;
@@ -65,7 +65,7 @@ async function getWeatherData(lat, lon) {
 async function getAirPollutionData(lat, lon) {
     try {
         const response = await fetch(
-            `https://api.openweathermap.org/data/2.5/air_pollution?lat=${lat}&lon=${lon}&appid=${apiKey}`
+            `${API_BASE}?endpoint=air_pollution&lat=${lat}&lon=${lon}`
         );
         const data = await response.json();
         return data;
