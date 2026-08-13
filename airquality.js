@@ -122,7 +122,7 @@ async function updateAirQualityInfo(lat, lon, locationName) {
             setSectionMessage(
                 searchCitySection,
                 'API Key Missing',
-                'Set your OpenWeather API key in config.local.js and reload this page'
+                'Set your OpenWeather API key in config.local.js or use ?apiKey=YOUR_KEY and reload'
             );
             searchCitySection.style.display = 'flex';
             notFoundSection.style.display = 'none';
@@ -167,7 +167,7 @@ async function updateAirQualityInfo(lat, lon, locationName) {
         notFoundSection.style.display = 'flex';
 
         if (error?.kind === 'auth') {
-            setSectionMessage(notFoundSection, 'Invalid API Key', 'Please update your API key in config.local.js');
+            setSectionMessage(notFoundSection, 'Invalid API Key', 'Please update your API key in config.local.js or via ?apiKey=YOUR_KEY');
         } else if (error?.kind === 'not_found') {
             setSectionMessage(notFoundSection, 'Location Not Found', 'Try searching a different location from the weather page');
         } else {

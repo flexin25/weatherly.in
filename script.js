@@ -196,7 +196,7 @@ function showApiSetupError() {
     setSectionMessage(
         notFoundSection,
         'API Key Missing',
-        'Set your OpenWeather API key in config.local.js and reload this page'
+        'Set your OpenWeather API key in config.local.js or use ?apiKey=YOUR_KEY and reload'
     );
     showDisplaySection(notFoundSection);
 }
@@ -399,7 +399,7 @@ async function updateWeatherInfo(input, isZipCode = false) {
         const isNetworkError = error?.kind === 'network';
 
         if (isAuthError) {
-            setSectionMessage(notFoundSection, 'Invalid API Key', 'Please update your API key in config.local.js');
+            setSectionMessage(notFoundSection, 'Invalid API Key', 'Please update your API key in config.local.js or via ?apiKey=YOUR_KEY');
         } else if (isNotFoundError) {
             setSectionMessage(notFoundSection, 'Location Not Found', 'Please search with a valid city or zip,country');
         } else if (isNetworkError) {
