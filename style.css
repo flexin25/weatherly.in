@@ -3,7 +3,7 @@
 /* ================= Weatherly Theme Tokens ================= */
 :root {
     --ink: #22223B;
-    --cream: #FFF9EC;
+    --cream: #f0ede4;
     --sun: #FFC93C;
     --sky: #FFE8A3;
     --accent: #FF6B35;
@@ -317,7 +317,7 @@ body {
     justify-content: space-between;
     align-items: center;
     margin: 6px 0;
-    background: #FFFFFF;
+    background: #d8d8d8;
     border: var(--outline-width) solid var(--ink);
     border-radius: 18px;
     box-shadow: 5px 5px 0 var(--ink);
@@ -410,7 +410,7 @@ body {
     align-items: center;
     gap: 6px;
     padding: 12px 6px;
-    background: #FFFFFF;
+    background: #d8d8d8;
     border: 2px solid var(--ink);
     border-radius: 12px;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
@@ -482,7 +482,7 @@ body {
 }
 
 .forecast-item {
-    background: #FFFFFF;
+    background: #d8d8d8;
     border: 2px solid var(--ink);
     border-radius: 14px;
     padding: 12px 10px;
