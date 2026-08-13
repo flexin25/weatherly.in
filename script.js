@@ -339,7 +339,9 @@ searchButton.addEventListener('click', () => {
         showInputError(validation.message);
         return;
     }
-    if (!hasValidApiKey(getActiveApiKey())) {
+    const activeApiKey = getActiveApiKey();
+
+    if (!activeApiKey) {
         showApiSetupError();
         return;
     }
@@ -355,7 +357,9 @@ cityInput.addEventListener('keydown', (event) => {
             showInputError(validation.message);
             return;
         }
-        if (!hasValidApiKey(getActiveApiKey())) {
+        const activeApiKey = getActiveApiKey();
+
+        if (!activeApiKey) {
             showApiSetupError();
             return;
         }
