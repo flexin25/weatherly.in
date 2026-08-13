@@ -469,14 +469,6 @@ async function updateWeatherInfo(input, isZipCode = false) {
         } else {
             setSectionMessage(notFoundSection, 'Weather Error', 'Unable to load weather report. Please try again');
         }
-        const apiUrl = `${API_BASE}?endpoint=weather&zip=${encodeURIComponent(zipParam)}&units=metric`;
-        const response = await fetch(apiUrl);
-        weatherData = await response.json();
-    } else {
-        weatherData = await getFetchData('weather', input);
-    }
-    
-    if (weatherData.cod != 200) {
         showDisplaySection(notFoundSection);
     }
 }
