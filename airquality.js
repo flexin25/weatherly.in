@@ -1,3 +1,38 @@
+// ── API key helpers (script.js is not loaded on this page) ──────────────────
+function hasValidApiKey(key) {
+    const normalized = typeof key === 'string' ? key.trim().toLowerCase() : '';
+    const placeholders = [
+        '',
+        'your_actual_api_key',
+        'your_api_key_here',
+        'replace_with_your_openweather_api_key',
+        'your_real_api_key_here',
+        'your_primary_api_key_here',
+        'your_backup_api_key_here'
+    ];
+    return !placeholders.includes(normalized);
+}
+
+function resolveApiKeyForAQ() {
+    // 1. config.local.js global (local dev)
+    const localKey = (typeof globalThis !== 'undefined' && globalThis.OPENWEATHER_API_KEY) || '';
+    if (hasValidApiKey(localKey)) return localKey;
+    // 2. URL ?apiKey=
+    const params = new URLSearchParams(window.location.search);
+    const queryKey = (params.get('apiKey') || params.get('apikey') || params.get('appid') || '').trim();
+    if (hasValidApiKey(queryKey)) return queryKey;
+    // 3. localStorage
+    try {
+        const stored = (localStorage.getItem('openweather_api_key') || '').trim();
+        if (hasValidApiKey(stored)) return stored;
+    } catch (_) {}
+    return '';
+}
+
+// On Vercel the proxy handles the key; locally we resolve it here.
+const apiKey = (typeof config !== 'undefined' && !config.isLocal) ? '__vercel__' : resolveApiKeyForAQ();
+
+
 const notFoundSection = document.querySelector('.not-found');
 const searchCitySection = document.querySelector('.search-city');
 const airQualityInfoSection = document.querySelector('.air-quality-info');
@@ -74,30 +109,10 @@ function setSectionMessage(section, title, subtitle) {
     if (subtitleElement) subtitleElement.textContent = subtitle;
 }
 
-function buildApiError(status, payload) {
-    const apiMessage = typeof payload?.message === 'string' ? payload.message : '';
-    const codValue = payload?.cod;
-    const cod = codValue !== undefined ? String(codValue) : '';
-    const lowered = apiMessage.toLowerCase();
-
-    if (status === 401 || cod === '401' || lowered.includes('invalid api key') || lowered.includes('unauthorized')) {
-        const authError = new Error('Invalid API key');
-        authError.kind = 'auth';
-        return authError;
-    }
-    if (status === 404 || cod === '404') {
-        const locationError = new Error('Location not found');
-        locationError.kind = 'not_found';
-        return locationError;
-    }
-    const serviceError = new Error('Air quality service unavailable');
-    serviceError.kind = 'api';
-    return serviceError;
-}
-
 async function updateAirQualityInfo(lat, lon, locationName) {
     try {
-        if (!hasValidApiKey(apiKey)) {
+        // On Vercel the proxy always has the key server-side; only block locally.
+        if (config.isLocal && !hasValidApiKey(apiKey)) {
             setSectionMessage(
                 searchCitySection,
                 'API Key Missing',
