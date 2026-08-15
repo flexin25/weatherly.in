@@ -69,9 +69,6 @@ function toTitleCase(text) {
 }
 
 function hasValidApiKey(key) {
-    if (typeof config !== 'undefined' && config && typeof config.hasValidApiKey === 'function') {
-        return config.hasValidApiKey(key);
-    }
     const normalized = typeof key === 'string' ? key.trim().toLowerCase() : '';
     const placeholders = [
         '',
@@ -85,32 +82,7 @@ function hasValidApiKey(key) {
     return !placeholders.includes(normalized);
 }
 
-function readApiKeyFromQuery() {
-    const params = new URLSearchParams(window.location.search);
-    return (params.get('apiKey') || params.get('apikey') || params.get('appid') || '').trim();
-}
 
-function readApiKeyFromStorage() {
-    try {
-        return (localStorage.getItem(API_KEY_STORAGE_KEY) || '').trim();
-    } catch (error) {
-        console.warn('Unable to read API key from localStorage:', error);
-        return '';
-    }
-}
-
-function getActiveApiKey() {
-    const configuredKey = resolveApiKey();
-    if (hasValidApiKey(configuredKey)) return configuredKey;
-
-    const queryKey = readApiKeyFromQuery();
-    if (hasValidApiKey(queryKey)) return queryKey;
-
-    const storedKey = readApiKeyFromStorage();
-    if (hasValidApiKey(storedKey)) return storedKey;
-
-    return configuredKey;
-}
 
 const infoBtn = document.querySelector('.info-btn');
 const searchHint = document.querySelector('.search-hint');
@@ -365,8 +337,6 @@ function getWeatherIcon(id) {
     if (id >= 600 && id <= 622) return 'snow.svg';
     if (id >= 700 && id <= 781) return 'atmosphere.svg';
     if (id === 800) return 'clear.svg';
-    if (id === 801 || id === 802) return 'clouds.svg';
-    if (id === 803 || id === 804) return 'clouds.svg';
     return 'clouds.svg';
 }
 

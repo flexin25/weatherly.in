@@ -84,23 +84,6 @@ function getAQILevel(aqi) {
     return levels[aqi] || levels[1];
 }
 
-async function getWeatherData(lat, lon) {
-    try {
-        const response = await fetch(config.buildUrl('weather', { lat, lon }));
-        return await response.json();
-    } catch (error) {
-        throw error;
-    }
-}
-
-async function getAirPollutionData(lat, lon) {
-    try {
-        const response = await fetch(config.buildUrl('air_pollution', { lat, lon }));
-        return await response.json();
-    } catch (error) {
-        throw error;
-    }
-}
 
 function setSectionMessage(section, title, subtitle) {
     const titleElement = section.querySelector('h1');
@@ -125,8 +108,8 @@ async function updateAirQualityInfo(lat, lon, locationName) {
         }
 
         const [weatherData, airPollutionData] = await Promise.all([
-            getWeatherData(lat, lon),
-            getAirPollutionData(lat, lon)
+            fetch(config.buildUrl('weather', { lat, lon })).then(r => r.json()),
+            fetch(config.buildUrl('air_pollution', { lat, lon })).then(r => r.json())
         ]);
         
         searchCitySection.style.display = 'none';
